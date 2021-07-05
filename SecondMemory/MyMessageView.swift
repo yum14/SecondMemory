@@ -1,5 +1,5 @@
 //
-//  MyChatView.swift
+//  MyMessageView.swift
 //  SecondMemory
 //
 //  Created by yum on 2021/06/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MyChatView: View {
+struct MyMessageView: View {
     var text: String
     
     var body: some View {
@@ -26,8 +26,8 @@ struct MyChatView: View {
     }
 }
 
-struct MyChatView_Previews: PreviewProvider {
+struct MyMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        MyChatView(text: "テキスト")
+        MyMessageView(text: "テキスト")
     }
 }
