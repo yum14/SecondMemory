@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84762680CCA700E3BD2A /* UIColorHex.swift */; };
-		752A84792680D33700E3BD2A /* BotChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84782680D33700E3BD2A /* BotChatView.swift */; };
-		752A847B268204FD00E3BD2A /* MyChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A847A268204FD00E3BD2A /* MyChatView.swift */; };
+		752A84792680D33700E3BD2A /* BotMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84782680D33700E3BD2A /* BotMessageView.swift */; };
+		752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A847A268204FD00E3BD2A /* MyMessageView.swift */; };
 		752A847D2682066B00E3BD2A /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A847C2682066B00E3BD2A /* ChatListView.swift */; };
 		7530CA79267F8A1200941539 /* SecondMemoryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CA78267F8A1100941539 /* SecondMemoryApp.swift */; };
 		7530CA7B267F8A1200941539 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CA7A267F8A1200941539 /* ContentView.swift */; };
@@ -18,7 +18,10 @@
 		7530CA8B267F8A1300941539 /* SecondMemoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CA8A267F8A1300941539 /* SecondMemoryTests.swift */; };
 		7530CA96267F8A1300941539 /* SecondMemoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CA95267F8A1300941539 /* SecondMemoryUITests.swift */; };
 		7530CAA4267F8CC500941539 /* BotImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CAA3267F8CC500941539 /* BotImageView.swift */; };
+		754C728F268F5C8D009F0A5F /* ChatBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C728E268F5C8D009F0A5F /* ChatBotView.swift */; };
+		754C7291269154E7009F0A5F /* MultiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C7290269154E6009F0A5F /* MultiTextField.swift */; };
 		75F154302682140600F5530D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F1542F2682140600F5530D /* ChatMessage.swift */; };
+		75FDE3B3269318D700BA1285 /* InputChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDE3B2269318D700BA1285 /* InputChatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +43,8 @@
 
 /* Begin PBXFileReference section */
 		752A84762680CCA700E3BD2A /* UIColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
-		752A84782680D33700E3BD2A /* BotChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotChatView.swift; sourceTree = "<group>"; };
-		752A847A268204FD00E3BD2A /* MyChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatView.swift; sourceTree = "<group>"; };
+		752A84782680D33700E3BD2A /* BotMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotMessageView.swift; sourceTree = "<group>"; };
+		752A847A268204FD00E3BD2A /* MyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessageView.swift; sourceTree = "<group>"; };
 		752A847C2682066B00E3BD2A /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
 		7530CA75267F8A1100941539 /* SecondMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7530CA78267F8A1100941539 /* SecondMemoryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondMemoryApp.swift; sourceTree = "<group>"; };
@@ -56,7 +59,10 @@
 		7530CA95267F8A1300941539 /* SecondMemoryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondMemoryUITests.swift; sourceTree = "<group>"; };
 		7530CA97267F8A1300941539 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7530CAA3267F8CC500941539 /* BotImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotImageView.swift; sourceTree = "<group>"; };
+		754C728E268F5C8D009F0A5F /* ChatBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotView.swift; sourceTree = "<group>"; };
+		754C7290269154E6009F0A5F /* MultiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTextField.swift; sourceTree = "<group>"; };
 		75F1542F2682140600F5530D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		75FDE3B2269318D700BA1285 /* InputChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,9 +129,12 @@
 				7530CA81267F8A1200941539 /* Info.plist */,
 				7530CA7E267F8A1200941539 /* Preview Content */,
 				7530CAA3267F8CC500941539 /* BotImageView.swift */,
-				752A84782680D33700E3BD2A /* BotChatView.swift */,
-				752A847A268204FD00E3BD2A /* MyChatView.swift */,
+				752A84782680D33700E3BD2A /* BotMessageView.swift */,
+				752A847A268204FD00E3BD2A /* MyMessageView.swift */,
 				752A847C2682066B00E3BD2A /* ChatListView.swift */,
+				754C728E268F5C8D009F0A5F /* ChatBotView.swift */,
+				754C7290269154E6009F0A5F /* MultiTextField.swift */,
+				75FDE3B2269318D700BA1285 /* InputChatView.swift */,
 			);
 			path = SecondMemory;
 			sourceTree = "<group>";
@@ -294,13 +303,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7530CAA4267F8CC500941539 /* BotImageView.swift in Sources */,
-				752A84792680D33700E3BD2A /* BotChatView.swift in Sources */,
-				752A847B268204FD00E3BD2A /* MyChatView.swift in Sources */,
+				752A84792680D33700E3BD2A /* BotMessageView.swift in Sources */,
+				752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */,
+				754C728F268F5C8D009F0A5F /* ChatBotView.swift in Sources */,
 				752A847D2682066B00E3BD2A /* ChatListView.swift in Sources */,
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
 				75F154302682140600F5530D /* ChatMessage.swift in Sources */,
+				754C7291269154E7009F0A5F /* MultiTextField.swift in Sources */,
 				7530CA7B267F8A1200941539 /* ContentView.swift in Sources */,
 				7530CA79267F8A1200941539 /* SecondMemoryApp.swift in Sources */,
+				75FDE3B3269318D700BA1285 /* InputChatView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

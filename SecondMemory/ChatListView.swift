@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatListView: View {
     var messages: [ChatMessage]
+    @Binding var scrollViewProxy: ScrollViewProxy?
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -19,21 +20,24 @@ struct ChatListView: View {
                     
                     Group {
                         if message.isMine {
-                            MyChatView(text: message.text)
+                            MyMessageView(text: message.text)
                                 .layoutPriority(1)
                                 .padding(.leading, 60)
                                 .padding(.trailing, 12)
                                 .padding(.bottom, 12)
                         } else {
-                            BotChatView(text: message.text)
+                            BotMessageView(text: message.text)
                                 .layoutPriority(1)
                                 .padding(.trailing, 50)
                                 .padding(.leading, 4)
                                 .padding(.bottom, 12)
                         }
-                    }.id(index)
+                    }.id(self.messages[index].id)
                 }
             }
+            .onAppear {
+                 self.scrollViewProxy = proxy
+             }
         }
     }
 }
@@ -46,6 +50,6 @@ struct ChatListView_Previews: PreviewProvider {
                         ChatMessage(id: "a", text: "今日のお買い物　にんじん、ジャガイモ、豚肉", isMine: true),
                         ChatMessage(id: "a", text: "あとカレールーも", isMine: true)]
         
-        return ChatListView(messages: messages)
+        return ChatListView(messages: messages, scrollViewProxy: .constant(nil))
     }
 }

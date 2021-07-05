@@ -1,5 +1,5 @@
 //
-//  BotChatView.swift
+//  BotMessageView.swift
 //  SecondMemory
 //
 //  Created by yum on 2021/06/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BotChatView: View {
+struct BotMessageView: View {
     var text: String
     
     var body: some View {
@@ -29,10 +29,10 @@ struct BotChatView: View {
     }
 }
 
-struct BotChatView_Previews: PreviewProvider {
+struct BotMessageView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            BotChatView(text: "コメント")
+            BotMessageView(text: "コメント")
                 .background(Color.secondary)
         }
     }
