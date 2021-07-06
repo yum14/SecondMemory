@@ -6,53 +6,52 @@
 //
 
 import SwiftUI
+import Firebase
+//import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 struct ChatBotView: View {
     
+    @State private var firstAppear = true
     @State private var text: String = ""
-    
-    @State private var objectDescription: String?
-    
     @State private var height: CGFloat = 36
     @State private var resignFirstResponder: Bool = false
     @State private var scrollViewProxy: ScrollViewProxy?
-    
-    // TODO: 仮データ
-    @State private var messages = [
-        ChatMessage(id: "a", text: "テキスト1", isMine: false),
-        ChatMessage(id: "a", text: "テキスト2", isMine: false),
-        ChatMessage(id: "b", text: "テキスト3", isMine: true),
-        ChatMessage(id: "c", text: "テキスト4", isMine: true),]
+    @ObservedObject private var store = MessageStore()
     
     var body: some View {
         VStack {
-            ChatListView(messages: self.messages,
+            ChatListView(messages: self.store.chatMessages,
                          scrollViewProxy: self.$scrollViewProxy)
             
-            
             InputChatView(text: self.$text) {
-                
+
                 if !self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    self.messages.append(ChatMessage(id: "add" + String(messages.count), text: self.text, isMine: true))
                     
-                    
-                    guard let proxy = self.scrollViewProxy,
-                          let message = self.messages.last else {
-                        return
-                    }
-                    
+                    // firestoreにデータ追加
+                    let doc = ChatMessage(text: self.text, isMine: true)
+                    self.store.add(doc)
+                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                         withAnimation {
-                            //一番下にアニメーションする
-                            proxy.scrollTo(message.id, anchor: .bottom)
+                            // 一番下にアニメーションする
+                            self.scrollViewProxy?.scrollTo(self.store.chatMessages.count - 1, anchor: .bottom)
+                            
                         }
                     })
-                    
                 }
                 
             }
             .padding(.leading, 8)
             .padding(.trailing, 8)
+        }
+        .onAppear {
+            if self.firstAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+                    // 一番下にアニメーションする
+                    self.scrollViewProxy?.scrollTo(self.store.chatMessages.count - 1, anchor: .bottom)
+                })
+            }
         }
     }
 }
@@ -63,17 +62,3 @@ struct ChatBotView_Previews: PreviewProvider {
     }
 }
 
-public extension Binding where Value: Equatable {
-    init(_ source: Binding<Value?>, replacingNilWith nilProxy: Value) {
-        self.init(
-            get: { source.wrappedValue ?? nilProxy },
-            set: { newValue in
-                if newValue == nilProxy {
-                    source.wrappedValue = nil
-                }
-                else {
-                    source.wrappedValue = newValue
-                }
-        })
-    }
-}
