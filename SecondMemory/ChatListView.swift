@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct ChatListView: View {
     var messages: [ChatMessage]
@@ -32,7 +33,7 @@ struct ChatListView: View {
                                 .padding(.leading, 4)
                                 .padding(.bottom, 12)
                         }
-                    }.id(self.messages[index].id)
+                    }.id(index)
                 }
             }
             .onAppear {
@@ -45,10 +46,10 @@ struct ChatListView: View {
 struct ChatListView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let messages = [ChatMessage(id: "a", text: "こんちゃ", isMine: false),
-                        ChatMessage(id: "a", text: "何か御用？", isMine: false),
-                        ChatMessage(id: "a", text: "今日のお買い物　にんじん、ジャガイモ、豚肉", isMine: true),
-                        ChatMessage(id: "a", text: "あとカレールーも", isMine: true)]
+        let messages = [ChatMessage(text: "こんちゃ", isMine: false),
+                        ChatMessage(text: "何か御用？", isMine: false),
+                        ChatMessage(text: "今日のお買い物　にんじん、ジャガイモ、豚肉", isMine: true),
+                        ChatMessage(text: "あとカレールーも", isMine: true)]
         
         return ChatListView(messages: messages, scrollViewProxy: .constant(nil))
     }

@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import Firebase
 
-class ChatMessage {
-    init(id: String, text: String, isMine: Bool) {
-        self.id  = id
-        self.text = text
-        self.isMine = isMine
-    }
+struct ChatMessage: Codable {
+    let text: String
+    let createdAt = Timestamp(date: Date())
+    let isMine: Bool
     
-    var id: String
-    var text: String
-    var isMine: Bool
+    enum CodingKeys: String, CodingKey {
+        case text
+        case createdAt
+        case isMine = "mine"
+    }
 }
