@@ -9,6 +9,8 @@ target 'SecondMemory' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
 
   target 'SecondMemoryTests' do
     inherit! :search_paths
