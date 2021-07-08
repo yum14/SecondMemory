@@ -24,23 +24,27 @@ struct ChatBotView: View {
             ChatListView(messages: self.store.chatMessages,
                          scrollViewProxy: self.$scrollViewProxy)
             
-            InputChatView(text: self.$text) {
-
-                if !self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    
-                    // firestoreにデータ追加
-                    let doc = ChatMessage(text: self.text, isMine: true)
-                    self.store.add(doc)
-                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                        withAnimation {
-                            // 一番下にアニメーションする
-                            self.scrollViewProxy?.scrollTo(self.store.chatMessages.count - 1, anchor: .bottom)
-                            
-                        }
-                    })
-                }
+            HStack(alignment: .bottom, spacing: 0) {
+                BotImageView(width: 44, height: 44)
+                    .padding(.trailing, 8)
                 
+                InputChatView(text: self.$text) {
+
+                    if !self.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        
+                        // firestoreにデータ追加
+                        let doc = ChatMessage(text: self.text, isMine: true)
+                        self.store.add(doc)
+                         
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                            withAnimation {
+                                // 一番下にアニメーションする
+                                self.scrollViewProxy?.scrollTo(self.store.chatMessages.count - 1, anchor: .bottom)
+                                
+                            }
+                        })
+                    }
+                }
             }
             .padding(.leading, 8)
             .padding(.trailing, 8)
@@ -51,6 +55,8 @@ struct ChatBotView: View {
                     // 一番下にアニメーションする
                     self.scrollViewProxy?.scrollTo(self.store.chatMessages.count - 1, anchor: .bottom)
                 })
+                
+                self.firstAppear.toggle()
             }
         }
     }
@@ -61,4 +67,3 @@ struct ChatBotView_Previews: PreviewProvider {
         ChatBotView()
     }
 }
-

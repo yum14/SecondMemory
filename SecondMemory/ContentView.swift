@@ -9,12 +9,43 @@ import SwiftUI
 import Firebase
 
 struct ContentView: View {
-    init() {
-        FirebaseApp.configure()
-    }
+//    var body: some View {
+//        ChatBotView()
+//    }
     
+    @ObservedObject private var authState = FirebaseAuthStateObserver()
+    @State var isShowSheet = false
+
     var body: some View {
-        ChatBotView()
+        NavigationView {
+            VStack {
+                if authState.isSignin {
+                    Text("You are logined.")
+                        .padding()
+                    Button("logout") {
+                        try! Auth.auth().signOut()
+                    }
+                    
+                    Text(self.authState.authUser?.uid ?? "")
+                    Text(self.authState.authUser?.displayName ?? "")
+                    Text(self.authState.authUser?.photoURL?.absoluteString ?? "")
+                    Text(self.authState.authUser?.email ?? "")
+                    
+                    NavigationLink("Push to ChatView", destination: ChatBotView())
+                        .padding()
+                }
+                else {
+                    Text("You are not logged in.")
+                        .padding()
+                    Button("login") {
+                        isShowSheet.toggle()
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $isShowSheet, content: {
+            FirebaseUIView()
+        })
     }
 }
 

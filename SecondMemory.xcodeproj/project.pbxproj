@@ -20,6 +20,9 @@
 		7530CAA4267F8CC500941539 /* BotImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CAA3267F8CC500941539 /* BotImageView.swift */; };
 		754C728F268F5C8D009F0A5F /* ChatBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C728E268F5C8D009F0A5F /* ChatBotView.swift */; };
 		754C7291269154E7009F0A5F /* MultiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C7290269154E6009F0A5F /* MultiTextField.swift */; };
+		754DB8EB2695D8CA004AB524 /* FirebaseUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754DB8EA2695D8CA004AB524 /* FirebaseUIView.swift */; };
+		754DB8ED2695D9D1004AB524 /* FirebaseAuthStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754DB8EC2695D9D1004AB524 /* FirebaseAuthStateObserver.swift */; };
+		755EAA8E2697376B003FB085 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755EAA8D2697376B003FB085 /* AuthUser.swift */; };
 		75CF531526933C3A00B4FE2E /* DateFormatterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */; };
 		75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CF531626933FEC00B4FE2E /* MessageStore.swift */; };
 		75CF53192693469E00B4FE2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75CF53182693469E00B4FE2E /* GoogleService-Info.plist */; };
@@ -72,6 +75,9 @@
 		7530CAA3267F8CC500941539 /* BotImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotImageView.swift; sourceTree = "<group>"; };
 		754C728E268F5C8D009F0A5F /* ChatBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotView.swift; sourceTree = "<group>"; };
 		754C7290269154E6009F0A5F /* MultiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiTextField.swift; sourceTree = "<group>"; };
+		754DB8EA2695D8CA004AB524 /* FirebaseUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUIView.swift; sourceTree = "<group>"; };
+		754DB8EC2695D9D1004AB524 /* FirebaseAuthStateObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthStateObserver.swift; sourceTree = "<group>"; };
+		755EAA8D2697376B003FB085 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
 		75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtension.swift; sourceTree = "<group>"; };
 		75CF531626933FEC00B4FE2E /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		75CF53182693469E00B4FE2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -162,6 +168,7 @@
 				754C7290269154E6009F0A5F /* MultiTextField.swift */,
 				75FDE3B2269318D700BA1285 /* InputChatView.swift */,
 				75CF53182693469E00B4FE2E /* GoogleService-Info.plist */,
+				754DB8EA2695D8CA004AB524 /* FirebaseUIView.swift */,
 			);
 			path = SecondMemory;
 			sourceTree = "<group>";
@@ -197,6 +204,8 @@
 			children = (
 				75F1542F2682140600F5530D /* ChatMessage.swift */,
 				75CF531626933FEC00B4FE2E /* MessageStore.swift */,
+				754DB8EC2695D9D1004AB524 /* FirebaseAuthStateObserver.swift */,
+				755EAA8D2697376B003FB085 /* AuthUser.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -236,6 +245,7 @@
 				7530CA72267F8A1100941539 /* Frameworks */,
 				7530CA73267F8A1100941539 /* Resources */,
 				A45957B5DD9CB3F2A97EC615 /* [CP] Embed Pods Frameworks */,
+				D758B227E36155AC14CB83E8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,6 +284,7 @@
 				7530CA8E267F8A1300941539 /* Frameworks */,
 				7530CA8F267F8A1300941539 /* Resources */,
 				B114040DD28F23F15817C309 /* [CP] Embed Pods Frameworks */,
+				E17D123DA06A0083A9A1C034 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -435,6 +446,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D758B227E36155AC14CB83E8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SecondMemory/Pods-SecondMemory-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SecondMemory/Pods-SecondMemory-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SecondMemory/Pods-SecondMemory-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DC3B0DD1B80F035701E94CEC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -457,6 +485,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E17D123DA06A0083A9A1C034 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SecondMemory-SecondMemoryUITests/Pods-SecondMemory-SecondMemoryUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SecondMemory-SecondMemoryUITests/Pods-SecondMemory-SecondMemoryUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SecondMemory-SecondMemoryUITests/Pods-SecondMemory-SecondMemoryUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -474,8 +519,11 @@
 				75F154302682140600F5530D /* ChatMessage.swift in Sources */,
 				75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */,
 				754C7291269154E7009F0A5F /* MultiTextField.swift in Sources */,
+				755EAA8E2697376B003FB085 /* AuthUser.swift in Sources */,
 				7530CA7B267F8A1200941539 /* ContentView.swift in Sources */,
+				754DB8EB2695D8CA004AB524 /* FirebaseUIView.swift in Sources */,
 				7530CA79267F8A1200941539 /* SecondMemoryApp.swift in Sources */,
+				754DB8ED2695D9D1004AB524 /* FirebaseAuthStateObserver.swift in Sources */,
 				75FDE3B3269318D700BA1285 /* InputChatView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
