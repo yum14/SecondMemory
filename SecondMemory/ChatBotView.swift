@@ -24,10 +24,8 @@ struct ChatBotView: View {
             ChatListView(messages: self.store.chatMessages,
                          scrollViewProxy: self.$scrollViewProxy)
             
-            
             HStack(alignment: .bottom, spacing: 0) {
                 BotImageView(width: 44, height: 44)
-                    .background(Color.yellow)
                     .padding(.trailing, 8)
                 
                 InputChatView(text: self.$text) {
@@ -48,9 +46,6 @@ struct ChatBotView: View {
                     }
                 }
             }
-            
-            
-
             .padding(.leading, 8)
             .padding(.trailing, 8)
         }
