@@ -9,11 +9,7 @@ import SwiftUI
 import Firebase
 
 struct ContentView: View {
-//    var body: some View {
-//        ChatBotView()
-//    }
-    
-    @ObservedObject private var authState = FirebaseAuthStateObserver()
+    @EnvironmentObject var authState: FirebaseAuthStateObserver
     @State var isShowSheet = false
 
     var body: some View {
@@ -26,12 +22,13 @@ struct ContentView: View {
                         try! Auth.auth().signOut()
                     }
                     
-                    Text(self.authState.authUser?.uid ?? "")
-                    Text(self.authState.authUser?.displayName ?? "")
-                    Text(self.authState.authUser?.photoURL?.absoluteString ?? "")
-                    Text(self.authState.authUser?.email ?? "")
+                    Text(self.authState.uid ?? "")
+                    Text(self.authState.displayName ?? "")
+                    Text(self.authState.photoURL?.absoluteString ?? "")
+                    Text(self.authState.email ?? "")
                     
-                    NavigationLink("Push to ChatView", destination: ChatBotView())
+
+                    NavigationLink("Push to ChatView", destination: ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!)))
                         .padding()
                 }
                 else {

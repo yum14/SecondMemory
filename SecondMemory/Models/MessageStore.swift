@@ -16,12 +16,15 @@ class MessageStore: ObservableObject {
     @Published var chatMessages = [ChatMessage]()
     
     let db = Firestore.firestore()
-    let collectionName = "messages"
+    let collectionNamePrefix = "messages_"
+    let collectionName: String
     
-    init() {
+    init(uid: String) {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
+
+        self.collectionName = self.collectionNamePrefix + uid
         
         setListener()
     }

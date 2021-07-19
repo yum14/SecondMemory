@@ -8,12 +8,14 @@
 import Foundation
 import Firebase
 
-struct ChatMessage: Codable {
+struct ChatMessage: Identifiable, Codable {
+    var id: String = UUID().uuidString
     let text: String
     let createdAt = Timestamp(date: Date())
     let isMine: Bool
     
     enum CodingKeys: String, CodingKey {
+        case id
         case text
         case createdAt
         case isMine = "mine"

@@ -46,10 +46,10 @@ struct ChatListView: View {
 struct ChatListView_Previews: PreviewProvider {
     static var previews: some View {
         
-        let messages = [ChatMessage(text: "こんちゃ", isMine: false),
-                        ChatMessage(text: "何か御用？", isMine: false),
-                        ChatMessage(text: "今日のお買い物　にんじん、ジャガイモ、豚肉", isMine: true),
-                        ChatMessage(text: "あとカレールーも", isMine: true)]
+        let messages = [ChatMessage(id: "a", text: "こんちゃ", isMine: false),
+                        ChatMessage(id: "b", text: "何か御用？", isMine: false),
+                        ChatMessage(id: "c", text: "今日のお買い物　にんじん、ジャガイモ、豚肉", isMine: true),
+                        ChatMessage(id: "d", text: "あとカレールーも", isMine: true)]
         
         return ChatListView(messages: messages, scrollViewProxy: .constant(nil))
     }

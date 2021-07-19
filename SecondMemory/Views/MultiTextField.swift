@@ -60,8 +60,15 @@ struct RepresentableUITextView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<RepresentableUITextView>) -> UITextView {
         let view = UITextView()
         view.font = .systemFont(ofSize: 16)
-        view.text = placeholder
-        view.textColor = UIColor.black.withAlphaComponent(0.35)
+        
+        if self.text.isEmpty {
+            view.text = placeholder
+            view.textColor = UIColor.black.withAlphaComponent(0.35)
+        } else {
+            view.text = self.text
+            view.textColor = .black
+        }
+
         view.backgroundColor = .clear
         view.delegate = context.coordinator
 //        self.height = view.contentSize.height
