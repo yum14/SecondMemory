@@ -9,17 +9,21 @@ import SwiftUI
 
 struct InputChatView: View {
     @State private var height: CGFloat = 36
-    @State private var resignFirstResponder: Bool = false
-    
     @Binding var text: String
+//    @Binding var becomeFirstResponder: Bool
+//    @State var resignFirstResponder: Bool = false
+    var searching = false
     var onCommit: (() -> Void)?
-    
+    var onDismiss: (() -> Void)?
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 4) {
+            
             MultiTextField(text: self.$text,
                            height: self.$height,
-                           resignFirstResponder: self.$resignFirstResponder)
+                           isFirstResponder: self.searching)
+            //                           becomeFirstResponder: self.$becomeFirstResponder,
+            //                           resignFirstResponder: self.$resignFirstResponder)
             
             VStack(spacing: 0) {
                 Button(action: {
@@ -28,7 +32,12 @@ struct InputChatView: View {
                     
                     self.text = ""
                     self.height = 36
-                    self.resignFirstResponder = true
+//                    self.resignFirstResponder = true
+                    
+                    UIApplication.shared.closeKeyboard()
+                    
+                    self.onDismiss?()
+                    
                 }) {
                     Image(systemName: "paperplane.fill")
                         .resizable()

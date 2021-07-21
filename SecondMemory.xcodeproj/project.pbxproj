@@ -30,6 +30,7 @@
 		7562253926A4806C008E001B /* CdistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253826A4806C008E001B /* CdistResponse.swift */; };
 		7562253B26A481F4008E001B /* CdistApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253A26A481F4008E001B /* CdistApiClient.swift */; };
 		7562253D26A4871D008E001B /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253C26A4871D008E001B /* ResponseError.swift */; };
+		758636E626A71E6500EDA764 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758636E526A71E6500EDA764 /* BindingExtension.swift */; };
 		75CF531526933C3A00B4FE2E /* DateFormatterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */; };
 		75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CF531626933FEC00B4FE2E /* MessageStore.swift */; };
 		75CF53192693469E00B4FE2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75CF53182693469E00B4FE2E /* GoogleService-Info.plist */; };
@@ -92,6 +93,7 @@
 		7562253826A4806C008E001B /* CdistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdistResponse.swift; sourceTree = "<group>"; };
 		7562253A26A481F4008E001B /* CdistApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdistApiClient.swift; sourceTree = "<group>"; };
 		7562253C26A4871D008E001B /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		758636E526A71E6500EDA764 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
 		75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtension.swift; sourceTree = "<group>"; };
 		75CF531626933FEC00B4FE2E /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		75CF53182693469E00B4FE2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				752A84762680CCA700E3BD2A /* UIColorHex.swift */,
 				75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */,
+				758636E526A71E6500EDA764 /* BindingExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				7562253D26A4871D008E001B /* ResponseError.swift in Sources */,
 				754C728F268F5C8D009F0A5F /* ChatBotView.swift in Sources */,
 				7562253626A447A9008E001B /* ChatBotViewContainer.swift in Sources */,
+				758636E626A71E6500EDA764 /* BindingExtension.swift in Sources */,
 				752A847D2682066B00E3BD2A /* ChatListView.swift in Sources */,
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
 				753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */,

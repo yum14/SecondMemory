@@ -16,20 +16,23 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if authState.isSignin {
-                    Text("You are logined.")
-                        .padding()
-                    Button("logout") {
-                        try! Auth.auth().signOut()
-                    }
                     
-                    Text(self.authState.uid ?? "")
-                    Text(self.authState.displayName ?? "")
-                    Text(self.authState.photoURL?.absoluteString ?? "")
-                    Text(self.authState.email ?? "")
+                    ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!))
                     
-
-                    NavigationLink("Push to ChatView", destination: ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!)))
-                        .padding()
+//                    Text("You are logined.")
+//                        .padding()
+//                    Button("logout") {
+//                        try! Auth.auth().signOut()
+//                    }
+                    
+//                    Text(self.authState.uid ?? "")
+//                    Text(self.authState.displayName ?? "")
+//                    Text(self.authState.photoURL?.absoluteString ?? "")
+//                    Text(self.authState.email ?? "")
+//
+//
+//                    NavigationLink("Push to ChatView", destination: ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!)))
+//                        .padding()
                 }
                 else {
                     Text("You are not logged in.")
