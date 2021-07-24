@@ -94,6 +94,7 @@
 		7562253A26A481F4008E001B /* CdistApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdistApiClient.swift; sourceTree = "<group>"; };
 		7562253C26A4871D008E001B /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		758636E526A71E6500EDA764 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
+		75C6E8A326A94AF10037BA21 /* SecondMemory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SecondMemory.entitlements; sourceTree = "<group>"; };
 		75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtension.swift; sourceTree = "<group>"; };
 		75CF531626933FEC00B4FE2E /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		75CF53182693469E00B4FE2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -170,6 +171,7 @@
 		7530CA77267F8A1100941539 /* SecondMemory */ = {
 			isa = PBXGroup;
 			children = (
+				75C6E8A326A94AF10037BA21 /* SecondMemory.entitlements */,
 				7562253726A447B7008E001B /* Views */,
 				7562253426A44778008E001B /* Containers */,
 				753A7C9E269F0FE800145D4A /* Models */,
@@ -181,7 +183,6 @@
 				7530CA81267F8A1200941539 /* Info.plist */,
 				7530CA7E267F8A1200941539 /* Preview Content */,
 				75CF53182693469E00B4FE2E /* GoogleService-Info.plist */,
-				754DB8EA2695D8CA004AB524 /* FirebaseUIView.swift */,
 			);
 			path = SecondMemory;
 			sourceTree = "<group>";
@@ -234,6 +235,7 @@
 		7562253726A447B7008E001B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				754DB8EA2695D8CA004AB524 /* FirebaseUIView.swift */,
 				7530CAA3267F8CC500941539 /* BotImageView.swift */,
 				752A84782680D33700E3BD2A /* BotMessageView.swift */,
 				752A847A268204FD00E3BD2A /* MyMessageView.swift */,
@@ -738,6 +740,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SecondMemory/SecondMemory.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"SecondMemory/Preview Content\"";
 				DEVELOPMENT_TEAM = TB8F2PW523;
@@ -761,6 +764,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SecondMemory/SecondMemory.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"SecondMemory/Preview Content\"";
 				DEVELOPMENT_TEAM = TB8F2PW523;

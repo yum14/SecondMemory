@@ -12,7 +12,6 @@ struct ChatBotViewContainer: View {
     @EnvironmentObject var authState: FirebaseAuthStateObserver
     
     var body: some View {
-//        ChatBotView(messages: self.store.chatMessages, onCommit: self.onCommit, onBotIconTapped: self.onBotIconTapped, text: self.$text)
         ChatBotView(idToken: self.authState.token ?? "", messages: self.store.chatMessages, addChatMessage: self.addChatMessage)
     }
     

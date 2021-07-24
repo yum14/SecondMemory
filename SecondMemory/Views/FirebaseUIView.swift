@@ -26,6 +26,9 @@ struct FirebaseUIView: UIViewControllerRepresentable {
         let authUI = FUIAuth.defaultAuthUI()!
         let providers: [FUIAuthProvider] = [
             FUIGoogleAuth(authUI: authUI),
+            FUIOAuth.twitterAuthProvider(),
+            FUIFacebookAuth(authUI: authUI),
+            FUIOAuth.appleAuthProvider()
         ]
         authUI.providers = providers
         authUI.delegate = context.coordinator

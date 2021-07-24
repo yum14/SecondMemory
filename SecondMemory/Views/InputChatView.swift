@@ -22,8 +22,6 @@ struct InputChatView: View {
             MultiTextField(text: self.$text,
                            height: self.$height,
                            isFirstResponder: self.searching)
-            //                           becomeFirstResponder: self.$becomeFirstResponder,
-            //                           resignFirstResponder: self.$resignFirstResponder)
             
             VStack(spacing: 0) {
                 Button(action: {
@@ -32,7 +30,6 @@ struct InputChatView: View {
                     
                     self.text = ""
                     self.height = 36
-//                    self.resignFirstResponder = true
                     
                     UIApplication.shared.closeKeyboard()
                     

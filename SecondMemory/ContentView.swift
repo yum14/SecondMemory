@@ -11,37 +11,38 @@ import Firebase
 struct ContentView: View {
     @EnvironmentObject var authState: FirebaseAuthStateObserver
     @State var isShowSheet = false
-
+    
     var body: some View {
         NavigationView {
             VStack {
-                if authState.isSignin {
-                    
-                    ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!))
-                    
-//                    Text("You are logined.")
-//                        .padding()
-//                    Button("logout") {
-//                        try! Auth.auth().signOut()
-//                    }
-                    
-//                    Text(self.authState.uid ?? "")
-//                    Text(self.authState.displayName ?? "")
-//                    Text(self.authState.photoURL?.absoluteString ?? "")
-//                    Text(self.authState.email ?? "")
-//
-//
-//                    NavigationLink("Push to ChatView", destination: ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!)))
-//                        .padding()
-                }
-                else {
-                    Text("You are not logged in.")
-                        .padding()
-                    Button("login") {
-                        isShowSheet.toggle()
+                if !self.authState.initialLoading {
+                    if self.authState.isSignin {
+                        
+                        ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!))
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button("ログアウト") {
+                                        do {
+                                            try Auth.auth().signOut()
+                                        } catch let error {
+                                            print(error.localizedDescription)
+                                        }
+                                    }
+                                }
+                            }
                     }
+                    else {
+                        Text("You are not logged in.")
+                            .padding()
+                        Button("login") {
+                            isShowSheet.toggle()
+                        }
+                    }
+                } else {
+                    Text("Loading.....")
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isShowSheet, content: {
             FirebaseUIView()

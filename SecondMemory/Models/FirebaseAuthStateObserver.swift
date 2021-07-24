@@ -14,6 +14,7 @@ class FirebaseAuthStateObserver: ObservableObject {
     @Published var displayName: String?
     @Published var email: String?
     @Published var photoURL: URL?
+    @Published var initialLoading: Bool = true
     
     private var listener: AuthStateDidChangeListenerHandle!
 
@@ -22,6 +23,7 @@ class FirebaseAuthStateObserver: ObservableObject {
             guard let user = user else {
                 print("sign-out")
                 self.isSignin = false
+                self.initialLoading = false
                 return
             }
             
@@ -41,7 +43,10 @@ class FirebaseAuthStateObserver: ObservableObject {
             
             print("sign-in")
             self.isSignin = true
+            self.initialLoading = false
         }
+        
+        print("****** init end *****")
     }
 
     deinit {
