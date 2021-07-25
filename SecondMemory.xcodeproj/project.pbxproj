@@ -31,6 +31,10 @@
 		7562253B26A481F4008E001B /* CdistApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253A26A481F4008E001B /* CdistApiClient.swift */; };
 		7562253D26A4871D008E001B /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253C26A4871D008E001B /* ResponseError.swift */; };
 		758636E626A71E6500EDA764 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758636E526A71E6500EDA764 /* BindingExtension.swift */; };
+		758AF8F426AC603F00F4FCC7 /* VectorStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758AF8F326AC603F00F4FCC7 /* VectorStore.swift */; };
+		75C6E8A926ABEF770037BA21 /* FirebaseAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75C6E8A726ABEF770037BA21 /* FirebaseAuthUI.strings */; };
+		75C6E8AB26ABF79B0037BA21 /* BotSearchResultRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */; };
+		75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */; };
 		75CF531526933C3A00B4FE2E /* DateFormatterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */; };
 		75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CF531626933FEC00B4FE2E /* MessageStore.swift */; };
 		75CF53192693469E00B4FE2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75CF53182693469E00B4FE2E /* GoogleService-Info.plist */; };
@@ -94,7 +98,11 @@
 		7562253A26A481F4008E001B /* CdistApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdistApiClient.swift; sourceTree = "<group>"; };
 		7562253C26A4871D008E001B /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
 		758636E526A71E6500EDA764 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
+		758AF8F326AC603F00F4FCC7 /* VectorStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorStore.swift; sourceTree = "<group>"; };
 		75C6E8A326A94AF10037BA21 /* SecondMemory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SecondMemory.entitlements; sourceTree = "<group>"; };
+		75C6E8A826ABEF770037BA21 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = FirebaseAuthUI.strings; sourceTree = "<group>"; };
+		75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotSearchResultRowView.swift; sourceTree = "<group>"; };
+		75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotSearchResultView.swift; sourceTree = "<group>"; };
 		75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterExtension.swift; sourceTree = "<group>"; };
 		75CF531626933FEC00B4FE2E /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		75CF53182693469E00B4FE2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -149,6 +157,7 @@
 		7530CA6C267F8A1100941539 = {
 			isa = PBXGroup;
 			children = (
+				75C6E8A626ABEF770037BA21 /* ja.lproj */,
 				7530CA77267F8A1100941539 /* SecondMemory */,
 				7530CA89267F8A1300941539 /* SecondMemoryTests */,
 				7530CA94267F8A1300941539 /* SecondMemoryUITests */,
@@ -217,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				75CF531626933FEC00B4FE2E /* MessageStore.swift */,
+				758AF8F326AC603F00F4FCC7 /* VectorStore.swift */,
 				753A7C9C269F0AB300145D4A /* VectorEncodeApiClient.swift */,
 				7562253A26A481F4008E001B /* CdistApiClient.swift */,
 				754DB8EC2695D9D1004AB524 /* FirebaseAuthStateObserver.swift */,
@@ -243,8 +253,19 @@
 				754C728E268F5C8D009F0A5F /* ChatBotView.swift */,
 				754C7290269154E6009F0A5F /* MultiTextField.swift */,
 				75FDE3B2269318D700BA1285 /* InputChatView.swift */,
+				75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */,
+				75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		75C6E8A626ABEF770037BA21 /* ja.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				75C6E8A726ABEF770037BA21 /* FirebaseAuthUI.strings */,
+			);
+			name = ja.lproj;
+			path = "../../../../Library/Mobile Documents/com~apple~CloudDocs/app/second-memory/firebase/FirebaseUI-iOS-master/FirebaseAuthUI/Sources/Strings/ja.lproj";
 			sourceTree = "<group>";
 		};
 		75F1542E268213F200F5530D /* Data */ = {
@@ -375,6 +396,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 7530CA6C267F8A1100941539;
 			productRefGroup = 7530CA76267F8A1100941539 /* Products */;
@@ -396,6 +418,7 @@
 				7530CA80267F8A1200941539 /* Preview Assets.xcassets in Resources */,
 				7530CA7D267F8A1200941539 /* Assets.xcassets in Resources */,
 				75CF53192693469E00B4FE2E /* GoogleService-Info.plist in Resources */,
+				75C6E8A926ABEF770037BA21 /* FirebaseAuthUI.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +586,9 @@
 				752A84792680D33700E3BD2A /* BotMessageView.swift in Sources */,
 				7562253B26A481F4008E001B /* CdistApiClient.swift in Sources */,
 				75589B1726A59FA9008FD6F8 /* CdistResult.swift in Sources */,
+				758AF8F426AC603F00F4FCC7 /* VectorStore.swift in Sources */,
 				75CF531526933C3A00B4FE2E /* DateFormatterExtension.swift in Sources */,
+				75C6E8AB26ABF79B0037BA21 /* BotSearchResultRowView.swift in Sources */,
 				752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */,
 				7562253D26A4871D008E001B /* ResponseError.swift in Sources */,
 				754C728F268F5C8D009F0A5F /* ChatBotView.swift in Sources */,
@@ -571,6 +596,7 @@
 				758636E626A71E6500EDA764 /* BindingExtension.swift in Sources */,
 				752A847D2682066B00E3BD2A /* ChatListView.swift in Sources */,
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
+				75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */,
 				753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */,
 				7562253926A4806C008E001B /* CdistResponse.swift in Sources */,
 				75F154302682140600F5530D /* ChatMessage.swift in Sources */,
@@ -616,6 +642,17 @@
 			targetProxy = 7530CA92267F8A1300941539 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		75C6E8A726ABEF770037BA21 /* FirebaseAuthUI.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				75C6E8A826ABEF770037BA21 /* ja */,
+			);
+			name = FirebaseAuthUI.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7530CA98267F8A1300941539 /* Debug */ = {

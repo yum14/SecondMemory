@@ -87,20 +87,9 @@ struct RepresentableUITextView: UIViewRepresentable {
             uiView.becomeFirstResponder()
         }
         
-        if uiView.isFirstResponder {
-            // 未入力時にプレースホルダーを表示するため、isFirstResponderを条件とする
-            uiView.text = self.text
-        }
-        
-//        if self.becomeFirstResponder {
-//            uiView.becomeFirstResponder()
-//            self.becomeFirstResponder = false
-//        }
-        
-//        if self.resignFirstResponder {
-//            // フォーカスを外す
-//            uiView.resignFirstResponder()
-////            self.resignFirstResponder = false
+//        if uiView.isFirstResponder {
+//            // 未入力時にプレースホルダーを表示するため、isFirstResponderを条件とする
+//            uiView.text = self.text
 //        }
     }
 

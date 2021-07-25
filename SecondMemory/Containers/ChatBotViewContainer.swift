@@ -8,16 +8,19 @@
 import SwiftUI
 
 struct ChatBotViewContainer: View {
-    @ObservedObject var store: MessageStore
+    @ObservedObject var messageStore: MessageStore
+    @ObservedObject var vectorStore: VectorStore
     @EnvironmentObject var authState: FirebaseAuthStateObserver
     
     var body: some View {
-        ChatBotView(idToken: self.authState.token ?? "", messages: self.store.chatMessages, addChatMessage: self.addChatMessage)
+        ChatBotView(idToken: self.authState.token ?? "", messages: self.messageStore.chatMessages, addChatMessage: self.addChatMessage, deleteVector: self.deleteVector)
     }
     
     func addChatMessage(value: ChatMessage) -> Void {
-        self.store.add(value)
+        self.messageStore.add(value)
     }
     
-
+    func deleteVector(id: String) -> Void {
+        self.vectorStore.delete(id: id)
+    }
 }

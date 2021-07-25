@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct ChatBotView: View {
-    let idToken: String
-    let messages: [ChatMessage]
-    let addChatMessage: ((ChatMessage) -> Void)?
-
+    var idToken: String
+    var messages: [ChatMessage]
+    var addChatMessage: (ChatMessage) -> Void = { _ in }
+    var deleteVector: (String) -> Void = { _ in }
+    
     @State var text: String = ""
     @State private var firstAppear = true
     @State private var height: CGFloat = 36
-//    @State private var becomeFirstResponder: Bool = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
     @State var searching = false
     
     var body: some View {
         VStack {
-            ChatListView(messages: self.messages, scrollViewProxy: self.$scrollViewProxy)
+            ChatListView(messages: self.messages, scrollViewProxy: self.$scrollViewProxy, deleteVector: self.deleteVector)
             
             HStack(alignment: .bottom, spacing: 0) {
                 Button(action: {
@@ -38,7 +38,6 @@ struct ChatBotView: View {
                               onCommit: {
                                 self.onCommit()
                                 self.scrollBottom()
-//                                self.becomeFirstResponder = false
                                 
                                 if self.searching {
                                     self.searching.toggle()
@@ -76,8 +75,8 @@ struct ChatBotView: View {
         let text = "検索ワードをチャットしてけろ。"
         
         // firestoreにデータ追加
-        let doc = ChatMessage(text: text, isMine: false)
-        self.addChatMessage?(doc)
+        let doc = ChatMessage(type: .bot, contents: [ChatMessageContent(text: text)])
+        self.addChatMessage(doc)
         self.searching = true        
         self.text = "> "
     }
@@ -88,11 +87,10 @@ struct ChatBotView: View {
             return
         }
         
-        let id = UUID().uuidString
-        
+        let contentId = UUID().uuidString
         // firestoreにデータ追加
-        let doc = ChatMessage(id: id, text: self.text, isMine: true)
-        self.addChatMessage?(doc)
+        let doc = ChatMessage(type: .mine, contents: [ChatMessageContent(id: contentId, text: self.text)])
+        self.addChatMessage(doc)
         
         
         if self.text.hasPrefix("> ") {
@@ -123,10 +121,17 @@ struct ChatBotView: View {
                             }
                         } else {
                             
-                            // firestoreにデータ追加
-                            let doc = ChatMessage(text: response.result.map { $0.sentence }.joined(separator: "\n"), isMine: false)
+                            print("word: \(searchWord)")
+                            for result in response.result {
+                                print("id: \(result.id), score: \(result.score)")
+                            }
                             
-                            self.addChatMessage?(doc)
+                            // firestoreにデータ追加
+//                            let doc = ChatMessage(type: .bot, contents: [ChatMessageContent(text: response.result.map { $0.sentence }.joined(separator: "\n"))])
+                            
+                            let doc = ChatMessage(type: .search, contents: response.result.map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
+                            
+                            self.addChatMessage(doc)
                         }
                     }
                     
@@ -144,7 +149,7 @@ struct ChatBotView: View {
             
             do {
                 
-                let content = VectorEncodeRequest(id: id, sentence: self.text)
+                let content = VectorEncodeRequest(id: contentId, sentence: self.text)
                 
                 try model.post(content: content) {(status: Int?, response: VectorEncodeResponse?, error: Error?) in
                     if let error = error {
@@ -178,6 +183,6 @@ struct ChatBotView: View {
 
 struct ChatBotView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatBotView(idToken: "", messages: [ChatMessage(id: "id", text: "test", isMine: true)], addChatMessage: nil)
+        ChatBotView(idToken: "", messages: [ChatMessage(id: "id", type: .mine, contents: [ChatMessageContent(id: "id", text: "test1")])])
     }
 }

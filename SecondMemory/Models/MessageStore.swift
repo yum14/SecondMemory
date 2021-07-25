@@ -68,10 +68,9 @@ class MessageStore: ObservableObject {
     
     func add(_ message: ChatMessage) {
         do {
-            try db.collection(self.collectionName).document(UUID().uuidString).setData(from: message)
+            try db.collection(self.collectionName).document(message.id).setData(from: message)
         } catch let error {
             print("Error writing data: \(error)")
         }
-    }
-    
+    }    
 }

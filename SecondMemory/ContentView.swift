@@ -18,7 +18,8 @@ struct ContentView: View {
                 if !self.authState.initialLoading {
                     if self.authState.isSignin {
                         
-                        ChatBotViewContainer(store: MessageStore(uid: self.authState.uid!))
+                        ChatBotViewContainer(messageStore: MessageStore(uid: self.authState.uid!),
+                                             vectorStore: VectorStore(uid: self.authState.uid!))
                             .toolbar {
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button("ログアウト") {
