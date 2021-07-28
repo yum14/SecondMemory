@@ -11,44 +11,51 @@ import Firebase
 struct ChatListView: View {
     var messages: [ChatMessage]
     @Binding var scrollViewProxy: ScrollViewProxy?
+    @Binding var loadFirstItem: Bool
     var deleteChatMessage: (String) -> Void = { _ in }
     var deleteVector: (String) -> Void = { _ in }
+    
+    @State var aaa = ""
     
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                ForEach(self.messages.indices, id: \.self) { index in
-                    
-                    let message = self.messages[index]
-                    
-                    Group {
-                        if message.type == ChatMessage.ChatType.mine.rawValue {
-                            MyMessageView(text: message.contents[0].text)
-                                .layoutPriority(1)
-                                .padding(.leading, 60)
-                                .padding(.trailing, 12)
-                                .padding(.bottom, 12)
-                        } else if message.type == ChatMessage.ChatType.bot.rawValue {
-                            BotMessageView(text: message.contents[0].text)
-                                .layoutPriority(1)
-                                .padding(.trailing, 50)
-                                .padding(.leading, 4)
-                                .padding(.bottom, 12)
-                        } else {
-                            BotSearchResultView(messages: message.contents,
-                                                onMovePressed: { _ in },
-                                                onDeletePressed: self.deleteVector)
-                                .layoutPriority(1)
-                                .padding(.trailing, 50)
-                                .padding(.leading, 4)
-                                .padding(.bottom, 12)
+                LazyVStack {
+                    ForEach(self.messages.indices, id: \.self) { index in
+                        let message = self.messages[index]
+                        Group {
+                            if message.type == ChatMessage.ChatType.mine.rawValue {
+                                MyMessageView(text: message.contents[0].text)
+                                    .layoutPriority(1)
+                                    .padding(.leading, 60)
+                                    .padding(.trailing, 12)
+                                    .padding(.bottom, 12)
+                            } else if message.type == ChatMessage.ChatType.bot.rawValue {
+                                BotMessageView(text: message.contents[0].text)
+                                    .layoutPriority(1)
+                                    .padding(.trailing, 50)
+                                    .padding(.leading, 4)
+                                    .padding(.bottom, 12)
+                            } else {
+                                BotSearchResultView(messages: message.contents,
+                                                    onMovePressed: { _ in },
+                                                    onDeletePressed: self.deleteVector)
+                                    .layoutPriority(1)
+                                    .padding(.trailing, 50)
+                                    .padding(.leading, 4)
+                                    .padding(.bottom, 12)
+                            }
                         }
-                    }.id(index)
+                        .id(index)
+                        .onAppear {
+                            self.loadFirstItem = self.messages.isFirstItem(message)
+                        }
+                    }
                 }
             }
             .onAppear {
-                 self.scrollViewProxy = proxy
-             }
+                self.scrollViewProxy = proxy
+            }
         }
     }
 }

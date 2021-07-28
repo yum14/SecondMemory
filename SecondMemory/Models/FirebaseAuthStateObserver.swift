@@ -45,8 +45,6 @@ class FirebaseAuthStateObserver: ObservableObject {
             self.isSignin = true
             self.initialLoading = false
         }
-        
-        print("****** init end *****")
     }
 
     deinit {

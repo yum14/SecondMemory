@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		752249E126B0457600031E3C /* RandomAccessCollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752249E026B0457600031E3C /* RandomAccessCollectionExtension.swift */; };
 		752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84762680CCA700E3BD2A /* UIColorHex.swift */; };
 		752A84792680D33700E3BD2A /* BotMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84782680D33700E3BD2A /* BotMessageView.swift */; };
 		752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A847A268204FD00E3BD2A /* MyMessageView.swift */; };
@@ -68,6 +69,7 @@
 		0B7B7D11C3AD715282A17897 /* Pods-SecondMemoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondMemoryTests.release.xcconfig"; path = "Target Support Files/Pods-SecondMemoryTests/Pods-SecondMemoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		383A45CA19E96167E11E27A8 /* Pods_SecondMemory_SecondMemoryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondMemory_SecondMemoryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EBB81A34146F4C4B349033F /* Pods-SecondMemory-SecondMemoryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SecondMemory-SecondMemoryUITests.debug.xcconfig"; path = "Target Support Files/Pods-SecondMemory-SecondMemoryUITests/Pods-SecondMemory-SecondMemoryUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		752249E026B0457600031E3C /* RandomAccessCollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomAccessCollectionExtension.swift; sourceTree = "<group>"; };
 		752A84762680CCA700E3BD2A /* UIColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
 		752A84782680D33700E3BD2A /* BotMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotMessageView.swift; sourceTree = "<group>"; };
 		752A847A268204FD00E3BD2A /* MyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessageView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				752A84762680CCA700E3BD2A /* UIColorHex.swift */,
 				75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */,
 				758636E526A71E6500EDA764 /* BindingExtension.swift */,
+				752249E026B0457600031E3C /* RandomAccessCollectionExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
 				75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */,
 				753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */,
+				752249E126B0457600031E3C /* RandomAccessCollectionExtension.swift in Sources */,
 				7562253926A4806C008E001B /* CdistResponse.swift in Sources */,
 				75F154302682140600F5530D /* ChatMessage.swift in Sources */,
 				75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */,

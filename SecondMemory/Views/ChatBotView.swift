@@ -16,18 +16,27 @@ struct ChatBotView: View {
     @State var text: String = ""
     @State private var firstAppear = true
     @State private var height: CGFloat = 36
-    @State private var scrollViewProxy: ScrollViewProxy?
+    @Binding var scrollViewProxy: ScrollViewProxy?
     
     @State var searching = false
+    @State var loadFirstItem = false
     
     var body: some View {
         VStack {
-            ChatListView(messages: self.messages, scrollViewProxy: self.$scrollViewProxy, deleteVector: self.deleteVector)
+            ChatListView(messages: self.messages,
+                         scrollViewProxy: self.$scrollViewProxy,
+                         loadFirstItem: self.$loadFirstItem,
+                         deleteVector: self.deleteVector)
+                .onChange(of: self.loadFirstItem, perform: { value in
+                    if value {
+                        
+                        // 新しいページデータを取得
+                    }
+                })
             
             HStack(alignment: .bottom, spacing: 0) {
                 Button(action: {
                     self.onBotIconTapped()
-                    self.scrollBottom()
                 }) {
                     BotImageView(width: 44, height: 44)
                         .padding(.trailing, 8)
@@ -37,7 +46,6 @@ struct ChatBotView: View {
                               searching: self.searching,
                               onCommit: {
                                 self.onCommit()
-                                self.scrollBottom()
                                 
                                 if self.searching {
                                     self.searching.toggle()
@@ -52,23 +60,6 @@ struct ChatBotView: View {
             .padding(.leading, 8)
             .padding(.trailing, 8)
         }
-        .onAppear {
-            if self.firstAppear {
-                self.scrollBottom()
-
-                self.firstAppear.toggle()
-            }
-        }
-    }
-    
-    func scrollBottom() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-            withAnimation {
-                // 一番下にアニメーションする
-                self.scrollViewProxy?.scrollTo(self.messages.count, anchor: .bottom)
-                
-            }
-        })
     }
     
     func onBotIconTapped() -> Void {
@@ -126,15 +117,11 @@ struct ChatBotView: View {
                                 print("id: \(result.id), score: \(result.score)")
                             }
                             
-                            // firestoreにデータ追加
-//                            let doc = ChatMessage(type: .bot, contents: [ChatMessageContent(text: response.result.map { $0.sentence }.joined(separator: "\n"))])
-                            
                             let doc = ChatMessage(type: .search, contents: response.result.map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
                             
                             self.addChatMessage(doc)
                         }
                     }
-                    
                 }
                 
             } catch let error {
@@ -183,6 +170,6 @@ struct ChatBotView: View {
 
 struct ChatBotView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatBotView(idToken: "", messages: [ChatMessage(id: "id", type: .mine, contents: [ChatMessageContent(id: "id", text: "test1")])])
+        ChatBotView(idToken: "", messages: [ChatMessage(id: "id", type: .mine, contents: [ChatMessageContent(id: "id", text: "test1")])], scrollViewProxy: .constant(nil))
     }
 }

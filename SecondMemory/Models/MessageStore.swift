@@ -17,31 +17,34 @@ class MessageStore: ObservableObject {
     
     let db = Firestore.firestore()
     let collectionNamePrefix = "messages_"
-    let collectionName: String
+    var collectionName: String?
     
-    init(uid: String) {
+//    init(uid: String) {
+    init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
 
+//        self.collectionName = self.collectionNamePrefix + uid
+//        self.onListen = onListen
+        
+    }
+    
+    func initialize(uid: String) {
         self.collectionName = self.collectionNamePrefix + uid
         
-        setListener()
-    }
-    
-    func setListener() {
-        db.collection(self.collectionName)
+        db.collection(self.collectionName!)
             .order(by: "createdAt").limit(toLast: 20)
-            .addSnapshotListener(self.onListen)
+            .addSnapshotListener(self.addMessage)
     }
     
-    func get() {
-        db.collection(self.collectionName)
-            .order(by: "createdAt").limit(toLast: 20)
-            .getDocuments(completion: self.onListen)
-    }
+//    func get() {
+//        db.collection(self.collectionName)
+//            .order(by: "createdAt").limit(toLast: 20)
+//            .getDocuments(completion: self.addMessage)
+//    }
     
-    private func onListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
+    private func addMessage(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
         var messages: [ChatMessage] = []
         
         guard let documents = querySnapshot?.documents else {
@@ -64,11 +67,16 @@ class MessageStore: ObservableObject {
         }
         
         self.chatMessages = messages
+//        self.onListen()
     }
     
     func add(_ message: ChatMessage) {
+        guard let collectionName = self.collectionName else {
+            return
+        }
+        
         do {
-            try db.collection(self.collectionName).document(message.id).setData(from: message)
+            try db.collection(collectionName).document(message.id).setData(from: message)
         } catch let error {
             print("Error writing data: \(error)")
         }

@@ -10,6 +10,8 @@ import Firebase
 
 struct ContentView: View {
     @EnvironmentObject var authState: FirebaseAuthStateObserver
+    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var vectorStore: VectorStore
     @State var isShowSheet = false
     
     var body: some View {
@@ -18,8 +20,9 @@ struct ContentView: View {
                 if !self.authState.initialLoading {
                     if self.authState.isSignin {
                         
-                        ChatBotViewContainer(messageStore: MessageStore(uid: self.authState.uid!),
-                                             vectorStore: VectorStore(uid: self.authState.uid!))
+//                        ChatBotViewContainer(messageStore: MessageStore(uid: self.authState.uid!),
+//                                             vectorStore: VectorStore(uid: self.authState.uid!))
+                        ChatBotViewContainer()
                             .toolbar {
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button("ログアウト") {
@@ -43,6 +46,14 @@ struct ContentView: View {
                     Text("Loading.....")
                 }
             }
+            .onChange(of: authState.uid, perform: { value in
+                guard let uid = value else {
+                    return
+                }
+                
+                self.messageStore.initialize(uid: uid)
+                self.vectorStore.initialize(uid: uid)
+            })
             .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isShowSheet, content: {

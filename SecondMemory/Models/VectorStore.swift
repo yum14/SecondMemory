@@ -14,18 +14,26 @@ import FirebaseFirestore
 class VectorStore: ObservableObject {
     let db = Firestore.firestore()
     let collectionNamePrefix = "vectors_"
-    let collectionName: String
+    var collectionName: String?
     
-    init(uid: String) {
+//    init(uid: String) {
+    init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
 
+//        self.collectionName = self.collectionNamePrefix + uid
+    }
+    
+    func initialize(uid: String) {
         self.collectionName = self.collectionNamePrefix + uid
     }
     
     func delete(id: String) {
-        db.collection(self.collectionName).document(id).delete()
+        guard let collectionName = self.collectionName else {
+            return
+        }
+        db.collection(collectionName).document(id).delete()
     }
     
 }
