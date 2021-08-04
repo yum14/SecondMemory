@@ -12,6 +12,8 @@ struct ChatBotView: View {
     var messages: [ChatMessage]
     var addChatMessage: (ChatMessage) -> Void = { _ in }
     var deleteVector: (String) -> Void = { _ in }
+  
+    var fetchData: () -> Void = {}
     
     @State var text: String = ""
     @State private var firstAppear = true
@@ -19,20 +21,14 @@ struct ChatBotView: View {
     @Binding var scrollViewProxy: ScrollViewProxy?
     
     @State var searching = false
-    @State var loadFirstItem = false
+    
     
     var body: some View {
         VStack {
             ChatListView(messages: self.messages,
                          scrollViewProxy: self.$scrollViewProxy,
-                         loadFirstItem: self.$loadFirstItem,
-                         deleteVector: self.deleteVector)
-                .onChange(of: self.loadFirstItem, perform: { value in
-                    if value {
-                        
-                        // 新しいページデータを取得
-                    }
-                })
+                         deleteVector: self.deleteVector,
+                         onListItemAppear: self.onListItemAppear)
             
             HStack(alignment: .bottom, spacing: 0) {
                 Button(action: {
@@ -164,6 +160,13 @@ struct ChatBotView: View {
             }
         }
         
+    }
+    
+    func onListItemAppear(item: ChatMessage) -> Void {
+        if self.messages.isFirstItem(item) {
+            // 新しいページデータを取得
+            self.fetchData()
+        }
     }
     
 }

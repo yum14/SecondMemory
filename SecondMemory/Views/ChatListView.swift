@@ -11,11 +11,9 @@ import Firebase
 struct ChatListView: View {
     var messages: [ChatMessage]
     @Binding var scrollViewProxy: ScrollViewProxy?
-    @Binding var loadFirstItem: Bool
     var deleteChatMessage: (String) -> Void = { _ in }
     var deleteVector: (String) -> Void = { _ in }
-    
-    @State var aaa = ""
+    var onListItemAppear: (ChatMessage) -> Void = { _ in }
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -48,7 +46,7 @@ struct ChatListView: View {
                         }
                         .id(index)
                         .onAppear {
-                            self.loadFirstItem = self.messages.isFirstItem(message)
+                            self.onListItemAppear(message)
                         }
                     }
                 }

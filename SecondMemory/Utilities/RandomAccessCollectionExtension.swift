@@ -13,12 +13,9 @@ extension RandomAccessCollection where Self.Element: Identifiable {
             return false
         }
         
-        guard let itemIndex = lastIndex(where: { AnyHashable($0.id) == AnyHashable(item.id) }) else {
+        guard let itemIndex = firstIndex(where: { AnyHashable($0.id) == AnyHashable(item.id) }) else {
             return false
         }
-
-        print("********* startIndex: \(startIndex)")
-        print("********* index: \(itemIndex)")
 
         let distance = self.distance(from: startIndex, to: itemIndex)
         return distance == 1

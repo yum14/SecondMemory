@@ -19,14 +19,14 @@ class MessageStore: ObservableObject {
     let collectionNamePrefix = "messages_"
     var collectionName: String?
     
-//    init(uid: String) {
+    
+    var firstItemTimestamp: Timestamp? = nil
+    
+    
     init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
-
-//        self.collectionName = self.collectionNamePrefix + uid
-//        self.onListen = onListen
         
     }
     
@@ -34,41 +34,87 @@ class MessageStore: ObservableObject {
         self.collectionName = self.collectionNamePrefix + uid
         
         db.collection(self.collectionName!)
-            .order(by: "createdAt").limit(toLast: 20)
-            .addSnapshotListener(self.addMessage)
+            .order(by: "createdAt")
+            .limit(toLast: 15)
+            .addSnapshotListener(self.onListen)
     }
     
-//    func get() {
-//        db.collection(self.collectionName)
-//            .order(by: "createdAt").limit(toLast: 20)
-//            .getDocuments(completion: self.addMessage)
-//    }
-    
-    private func addMessage(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
-        var messages: [ChatMessage] = []
-        
+    private func onListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
         guard let documents = querySnapshot?.documents else {
             print("Error fetching documents: \(error!)")
             return
         }
         
-        for document in documents {
-            let result = Result {
-                try document.data(as: ChatMessage.self)
-            }
-            switch result {
-            case .success(let message):
-                if let message = message {
-                    messages.append(message)
-                }
-            case .failure(let error):
-                print("Error decoding chatMessage: \(error)")
-            }
+        if documents.count == 0 {
+            return
         }
         
-        self.chatMessages = messages
-//        self.onListen()
+        let firstItem = self.map(snapshot: documents.first!)
+        guard let firstItem = firstItem else {
+            return
+        }
+        self.firstItemTimestamp = firstItem.createdAt
+        
+        
+        let newMessages: [ChatMessage] = documents.reduce([]) {
+            var newMessages = $0
+            if let newMessage = self.map(snapshot: $1) {
+                newMessages.append(newMessage)
+            }
+            return newMessages
+        }
+
+        self.chatMessages = newMessages
     }
+    
+    
+    
+    func fetch() {
+        db.collection(self.collectionName!)
+            .order(by: "createdAt")
+            .end(before: [self.firstItemTimestamp!])
+            .limit(toLast: 15)
+            .getDocuments(completion: { (snapshot, error) in
+                
+                guard let documents = snapshot?.documents else {
+                    print("Error fetching documents: \(error!)")
+                    return
+                }
+
+                let newMessages: [ChatMessage] = documents.reduce([]) {
+                    var newMessages = $0
+                    if let newMessage = self.map(snapshot: $1) {
+                        newMessages.append(newMessage)
+                    }
+                    return newMessages
+                }
+                
+                if newMessages.count > 0 {
+                    self.firstItemTimestamp = newMessages.first!.createdAt
+                    self.chatMessages.insert(contentsOf: newMessages, at: 0)
+                }
+            })
+        
+    }
+    
+    private func map(snapshot: QueryDocumentSnapshot) -> ChatMessage? {
+        let result = Result {
+            try snapshot.data(as: ChatMessage.self)
+        }
+        switch result {
+        case .success(let newMessage):
+            if let newMessage = newMessage {
+                return newMessage
+            }
+        case .failure(let error):
+            print("Error decoding chatMessage: \(error)")
+            return nil
+            
+        }
+        return nil
+    }
+    
+    
     
     func add(_ message: ChatMessage) {
         guard let collectionName = self.collectionName else {
