@@ -15,6 +15,9 @@ struct SecondMemoryApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(FirebaseAuthStateObserver())
+                .environmentObject(MessageStore())
+                .environmentObject(VectorStore())
         }
     }
     

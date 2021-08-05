@@ -9,39 +9,52 @@ import SwiftUI
 import Firebase
 
 struct ContentView: View {
-//    var body: some View {
-//        ChatBotView()
-//    }
-    
-    @ObservedObject private var authState = FirebaseAuthStateObserver()
+    @EnvironmentObject var authState: FirebaseAuthStateObserver
+    @EnvironmentObject var messageStore: MessageStore
+    @EnvironmentObject var vectorStore: VectorStore
     @State var isShowSheet = false
-
+    
     var body: some View {
         NavigationView {
             VStack {
-                if authState.isSignin {
-                    Text("You are logined.")
-                        .padding()
-                    Button("logout") {
-                        try! Auth.auth().signOut()
+                if !self.authState.initialLoading {
+                    if self.authState.isSignin {
+                        
+//                        ChatBotViewContainer(messageStore: MessageStore(uid: self.authState.uid!),
+//                                             vectorStore: VectorStore(uid: self.authState.uid!))
+                        ChatBotViewContainer()
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button("ログアウト") {
+                                        do {
+                                            try Auth.auth().signOut()
+                                        } catch let error {
+                                            print(error.localizedDescription)
+                                        }
+                                    }
+                                }
+                            }
                     }
-                    
-                    Text(self.authState.authUser?.uid ?? "")
-                    Text(self.authState.authUser?.displayName ?? "")
-                    Text(self.authState.authUser?.photoURL?.absoluteString ?? "")
-                    Text(self.authState.authUser?.email ?? "")
-                    
-                    NavigationLink("Push to ChatView", destination: ChatBotView())
-                        .padding()
-                }
-                else {
-                    Text("You are not logged in.")
-                        .padding()
-                    Button("login") {
-                        isShowSheet.toggle()
+                    else {
+                        Text("You are not logged in.")
+                            .padding()
+                        Button("login") {
+                            isShowSheet.toggle()
+                        }
                     }
+                } else {
+                    Text("Loading.....")
                 }
             }
+            .onChange(of: authState.uid, perform: { value in
+                guard let uid = value else {
+                    return
+                }
+                
+                self.messageStore.initialize(uid: uid)
+                self.vectorStore.initialize(uid: uid)
+            })
+            .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isShowSheet, content: {
             FirebaseUIView()

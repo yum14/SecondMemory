@@ -15,7 +15,11 @@ target 'SecondMemory' do
 #  pod 'FirebaseUI/Google', '>= 10.0.2'
   pod 'FirebaseUI/Auth'
   pod 'FirebaseUI/Google'
-
+  pod 'FirebaseUI/Facebook'
+  pod 'FirebaseUI/OAuth'
+  
+  pod 'FBSDKLoginKit', '<= 9.1'
+  
   target 'SecondMemoryTests' do
     inherit! :search_paths
     # Pods for testing
