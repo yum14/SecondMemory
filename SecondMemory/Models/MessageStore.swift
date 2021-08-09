@@ -11,33 +11,48 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 
-class MessageStore: ObservableObject {
+class MessageStore {
     
-    @Published var chatMessages = [ChatMessage]()
+    var chatMessages: [ChatMessage] = []
+    {
+        didSet {
+            if chatMessages.count > 0 && chatMessages.count != oldValue.count {
+                self.didSet(chatMessages)
+            }
+        }
+    }
     
-    let db = Firestore.firestore()
-    let collectionNamePrefix = "messages_"
-    var collectionName: String?
+    private let db = Firestore.firestore()
     
+    private let usersCollectionName = "users"
+    private let messagesCollectionName = "messages"
+    var didSet: ([ChatMessage]) -> Void = { _ in }
+    
+    private let uid: String
     
     var firstItemTimestamp: Timestamp? = nil
     
     
-    init() {
+    init(uid: String, didSet: @escaping (_ newValue: [ChatMessage]) -> Void = { _ in }) {
+        self.uid = uid
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
-        
-    }
-    
-    func initialize(uid: String) {
-        self.collectionName = self.collectionNamePrefix + uid
-        
-        db.collection(self.collectionName!)
-            .order(by: "createdAt")
+
+        db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
+            .order(by: "created_at")
             .limit(toLast: 15)
             .addSnapshotListener(self.onListen)
     }
+    
+//    func initialize(uid: String) {
+//        self.collectionName = self.collectionNamePrefix + uid
+//
+//        db.collection(self.collectionName!)
+//            .order(by: "createdAt")
+//            .limit(toLast: 15)
+//            .addSnapshotListener(self.onListen)
+//    }
     
     private func onListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
         guard let documents = querySnapshot?.documents else {
@@ -70,8 +85,8 @@ class MessageStore: ObservableObject {
     
     
     func fetch() {
-        db.collection(self.collectionName!)
-            .order(by: "createdAt")
+        db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
+            .order(by: "created_at")
             .end(before: [self.firstItemTimestamp!])
             .limit(toLast: 15)
             .getDocuments(completion: { (snapshot, error) in
@@ -117,12 +132,8 @@ class MessageStore: ObservableObject {
     
     
     func add(_ message: ChatMessage) {
-        guard let collectionName = self.collectionName else {
-            return
-        }
-        
         do {
-            try db.collection(collectionName).document(message.id).setData(from: message)
+            try db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName).document(message.id).setData(from: message)
         } catch let error {
             print("Error writing data: \(error)")
         }

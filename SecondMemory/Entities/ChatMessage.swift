@@ -26,6 +26,13 @@ struct ChatMessage: Identifiable, Codable {
         case bot
         case search
     }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case type
+        case contents
+        case createdAt = "created_at"
+    }
 }
 
 struct ChatMessageContent: Identifiable, Codable {

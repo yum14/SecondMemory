@@ -1,5 +1,5 @@
 //
-//  ChatListView.swift
+//  ChatScrollView.swift
 //  SecondMemory
 //
 //  Created by yum on 2021/06/22.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-struct ChatListView: View {
+struct ChatScrollView: View {
     var messages: [ChatMessage]
     @Binding var scrollViewProxy: ScrollViewProxy?
     var deleteChatMessage: (String) -> Void = { _ in }
@@ -58,7 +58,7 @@ struct ChatListView: View {
     }
 }
 
-struct ChatListView_Previews: PreviewProvider {
+struct ChatScrollView_Previews: PreviewProvider {
     static var previews: some View {
         
         let messages = [ChatMessage(type: .bot, contents: [ChatMessageContent(text: "こんちゃ")]),
@@ -66,6 +66,6 @@ struct ChatListView_Previews: PreviewProvider {
                         ChatMessage(type: .mine, contents: [ChatMessageContent(text: "今日のお買い物　にんじん、ジャガイモ、豚肉")]),
                         ChatMessage(type: .mine, contents: [ChatMessageContent(text: "あとカレールーも")])]
         
-        return ChatListView(messages: messages, scrollViewProxy: .constant(nil))
+        return ChatScrollView(messages: messages, scrollViewProxy: .constant(nil))
     }
 }

@@ -10,19 +10,17 @@ import Firebase
 
 struct ContentView: View {
     @EnvironmentObject var authState: FirebaseAuthStateObserver
-    @EnvironmentObject var messageStore: MessageStore
-    @EnvironmentObject var vectorStore: VectorStore
+//    @EnvironmentObject var messageStore: MessageStore
+//    @EnvironmentObject var vectorStore: VectorStore
     @State var isShowSheet = false
+    @State var text = ""
     
     var body: some View {
         NavigationView {
             VStack {
                 if !self.authState.initialLoading {
                     if self.authState.isSignin {
-                        
-//                        ChatBotViewContainer(messageStore: MessageStore(uid: self.authState.uid!),
-//                                             vectorStore: VectorStore(uid: self.authState.uid!))
-                        ChatBotViewContainer()
+                        ChatListView(presenter: ChatListViewPresenter(uid: self.authState.uid!, idToken: self.authState.token ?? ""))
                             .toolbar {
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button("ログアウト") {
@@ -51,8 +49,8 @@ struct ContentView: View {
                     return
                 }
                 
-                self.messageStore.initialize(uid: uid)
-                self.vectorStore.initialize(uid: uid)
+//                self.messageStore.initialize(uid: uid)
+//                self.vectorStore.initialize(uid: uid)
             })
             .navigationBarTitleDisplayMode(.inline)
         }
