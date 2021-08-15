@@ -7,33 +7,23 @@
 
 import Foundation
 import Firebase
-import FirebaseFirestoreSwift
-import FirebaseFirestore
 
-
-class VectorStore: ObservableObject {
-    let db = Firestore.firestore()
-    let collectionNamePrefix = "vectors_"
-    var collectionName: String?
+final class VectorStore: ObservableObject {
+    static let shared = VectorStore()
     
-//    init(uid: String) {
-    init() {
+    let db = Firestore.firestore()
+    
+    private let usersCollectionName = "users"
+    private let vectorsCollectionName = "vectors"
+    
+    private init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
-
-//        self.collectionName = self.collectionNamePrefix + uid
     }
     
-    func initialize(uid: String) {
-        self.collectionName = self.collectionNamePrefix + uid
-    }
-    
-    func delete(id: String) {
-        guard let collectionName = self.collectionName else {
-            return
-        }
-        db.collection(collectionName).document(id).delete()
+    func delete(uid: String, id: String) {
+        db.collection(self.usersCollectionName).document(uid).collection(self.vectorsCollectionName).document(id).delete()
     }
     
 }

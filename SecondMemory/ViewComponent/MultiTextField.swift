@@ -14,12 +14,14 @@ struct MultiTextField: View {
     // いまいちだけど制御難しいからクリアしたときのheight(36)は外から指定させる
     @Binding var height: CGFloat
     var isFirstResponder = false
+    var onBeginEditing: () -> Void = {}
     
     var body: some View {
         UITextViewWrapper(height: self.$height,
                           placeholder: "メッセージを入力",
                           text: self.$text,
-                          isFirstResponder: self.isFirstResponder)
+                          isFirstResponder: self.isFirstResponder,
+                          onBeginEditing: self.onBeginEditing)
             .padding(4)
             .background(Color.secondary)
             .cornerRadius(16)
@@ -37,12 +39,14 @@ struct UITextViewWrapper: View {
     var placeholder: String?
     @Binding var text: String
     var isFirstResponder = false
+    var onBeginEditing: () -> Void = {}
     
     var body: some View {
         RepresentableUITextView(height: $height,
                                 placeholder: self.placeholder,
                                 text: self.$text,
-                                isFirstResponder: self.isFirstResponder)
+                                isFirstResponder: self.isFirstResponder,
+                                onBeginEditing: self.onBeginEditing)
             .frame(height: self.height < 150 ? self.height : 150)
     }
 }
@@ -56,6 +60,7 @@ struct RepresentableUITextView: UIViewRepresentable {
     var placeholder: String? = "テキストを入力"
     @Binding var text: String
     var isFirstResponder = false
+    var onBeginEditing: () -> Void = {}
     
     func makeUIView(context: UIViewRepresentableContext<RepresentableUITextView>) -> UITextView {
         let view = UITextView()
@@ -71,7 +76,6 @@ struct RepresentableUITextView: UIViewRepresentable {
 
         view.backgroundColor = .clear
         view.delegate = context.coordinator
-//        self.height = view.contentSize.height
         view.isEditable = true
         view.isUserInteractionEnabled = true
         view.isScrollEnabled = true
@@ -82,15 +86,9 @@ struct RepresentableUITextView: UIViewRepresentable {
     
     
     func updateUIView(_ uiView: UITextView, context: Context) {
-        
         if self.isFirstResponder {
             uiView.becomeFirstResponder()
         }
-        
-//        if uiView.isFirstResponder {
-//            // 未入力時にプレースホルダーを表示するため、isFirstResponderを条件とする
-//            uiView.text = self.text
-//        }
     }
 
     class Coordinator: NSObject, UITextViewDelegate {
@@ -104,6 +102,8 @@ struct RepresentableUITextView: UIViewRepresentable {
             // Viewを選択して入力開始する時にplaceholderを消している（色も変えてる）
             textView.text = ""
             textView.textColor = .black
+            
+            self.parent.onBeginEditing()
         }
         
         func textViewDidChange(_ textView: UITextView) {

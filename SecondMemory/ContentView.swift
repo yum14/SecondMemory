@@ -10,19 +10,18 @@ import Firebase
 
 struct ContentView: View {
     @EnvironmentObject var authState: FirebaseAuthStateObserver
-    @EnvironmentObject var messageStore: MessageStore
-    @EnvironmentObject var vectorStore: VectorStore
     @State var isShowSheet = false
+    @StateObject var chatListViewPresenter = ChatListViewPresenter()
     
     var body: some View {
         NavigationView {
             VStack {
                 if !self.authState.initialLoading {
-                    if self.authState.isSignin {
+                    if self.authState.isSignin, let uid = self.authState.uid, let token = self.authState.token {
                         
-//                        ChatBotViewContainer(messageStore: MessageStore(uid: self.authState.uid!),
-//                                             vectorStore: VectorStore(uid: self.authState.uid!))
-                        ChatBotViewContainer()
+                        ChatListView(presenter: self.chatListViewPresenter,
+                                     uid: uid,
+                                     idToken: token)
                             .toolbar {
                                 ToolbarItem(placement: .navigationBarTrailing) {
                                     Button("ログアウト") {
@@ -33,8 +32,7 @@ struct ContentView: View {
                                         }
                                     }
                                 }
-                            }
-                    }
+                            }                    }
                     else {
                         Text("You are not logged in.")
                             .padding()
@@ -46,14 +44,6 @@ struct ContentView: View {
                     Text("Loading.....")
                 }
             }
-            .onChange(of: authState.uid, perform: { value in
-                guard let uid = value else {
-                    return
-                }
-                
-                self.messageStore.initialize(uid: uid)
-                self.vectorStore.initialize(uid: uid)
-            })
             .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isShowSheet, content: {

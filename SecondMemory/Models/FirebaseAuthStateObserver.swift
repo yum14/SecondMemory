@@ -16,6 +16,8 @@ class FirebaseAuthStateObserver: ObservableObject {
     @Published var photoURL: URL?
     @Published var initialLoading: Bool = true
     
+    private let userStore = UserStore()
+    
     private var listener: AuthStateDidChangeListenerHandle!
 
     init() {
@@ -42,6 +44,10 @@ class FirebaseAuthStateObserver: ObservableObject {
             }
             
             print("sign-in")
+            
+            let setUser = User(id: user.uid, displayName: user.displayName, email: user.email, photoUrl: user.photoURL?.absoluteString)
+            self.userStore.set(setUser)
+            
             self.isSignin = true
             self.initialLoading = false
         }
