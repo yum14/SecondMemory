@@ -8,22 +8,22 @@
 import Foundation
 import Firebase
 
-class VectorStore: ObservableObject {
+final class VectorStore: ObservableObject {
+    static let shared = VectorStore()
+    
     let db = Firestore.firestore()
     
     private let usersCollectionName = "users"
     private let vectorsCollectionName = "vectors"
-    private let uid: String
     
-    init(uid: String) {
-        self.uid = uid
+    private init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
     }
     
-    func delete(id: String) {
-        db.collection(self.usersCollectionName).document(self.uid).collection(self.vectorsCollectionName).document(id).delete()
+    func delete(uid: String, id: String) {
+        db.collection(self.usersCollectionName).document(uid).collection(self.vectorsCollectionName).document(id).delete()
     }
     
 }

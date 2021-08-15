@@ -11,7 +11,6 @@
 		752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84762680CCA700E3BD2A /* UIColorHex.swift */; };
 		752A84792680D33700E3BD2A /* BotMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A84782680D33700E3BD2A /* BotMessageView.swift */; };
 		752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A847A268204FD00E3BD2A /* MyMessageView.swift */; };
-		752A847D2682066B00E3BD2A /* ChatScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A847C2682066B00E3BD2A /* ChatScrollView.swift */; };
 		752D680F26BEC02D0091CD7E /* ChatListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752D680E26BEC02D0091CD7E /* ChatListPresenter.swift */; };
 		752D681226BEE2720091CD7E /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752D681126BEE2720091CD7E /* ApiClient.swift */; };
 		752D681426C0F64E0091CD7E /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752D681326C0F64E0091CD7E /* UserStore.swift */; };
@@ -75,7 +74,6 @@
 		752A84762680CCA700E3BD2A /* UIColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHex.swift; sourceTree = "<group>"; };
 		752A84782680D33700E3BD2A /* BotMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotMessageView.swift; sourceTree = "<group>"; };
 		752A847A268204FD00E3BD2A /* MyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessageView.swift; sourceTree = "<group>"; };
-		752A847C2682066B00E3BD2A /* ChatScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatScrollView.swift; sourceTree = "<group>"; };
 		752D680E26BEC02D0091CD7E /* ChatListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListPresenter.swift; sourceTree = "<group>"; };
 		752D681126BEE2720091CD7E /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		752D681326C0F64E0091CD7E /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				75FDE3B2269318D700BA1285 /* InputChatView.swift */,
 				75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */,
 				75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */,
-				752A847C2682066B00E3BD2A /* ChatScrollView.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -611,7 +608,6 @@
 				752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */,
 				7562253D26A4871D008E001B /* ResponseError.swift in Sources */,
 				754C728F268F5C8D009F0A5F /* ChatListView.swift in Sources */,
-				752A847D2682066B00E3BD2A /* ChatScrollView.swift in Sources */,
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
 				75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */,
 				753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */,

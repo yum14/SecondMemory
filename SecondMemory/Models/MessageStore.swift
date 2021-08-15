@@ -11,38 +11,38 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 
-class MessageStore {
+final class MessageStore {
+    static let shared = MessageStore()
     
     var chatMessages: [ChatMessage] = []
     {
         didSet {
-            if chatMessages.count > 0 && chatMessages.count != oldValue.count {
-                self.didSet(chatMessages)
+            if chatMessages.count > 0 {
+                self.onListen(chatMessages)
             }
         }
     }
     
     private let db = Firestore.firestore()
-    
     private let usersCollectionName = "users"
     private let messagesCollectionName = "messages"
-    var didSet: ([ChatMessage]) -> Void = { _ in }
-    
-    private let uid: String
-    
+    private var onListen: ([ChatMessage]) -> Void = { _ in }
+    private var uid: String = ""
     var firstItemTimestamp: Timestamp? = nil
     
-    
-    init(uid: String, didSet: @escaping (_ newValue: [ChatMessage]) -> Void = { _ in }) {
-        self.uid = uid
+    private init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
-
+    }
+    
+    func setListener(uid: String, onListen: @escaping (_ newValue: [ChatMessage]) -> Void = { _ in }) {
+        self.uid = uid
+        self.onListen = onListen
         db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
             .order(by: "created_at")
             .limit(toLast: 15)
-            .addSnapshotListener(self.onListen)
+            .addSnapshotListener(self.snapshotListen)
     }
     
 //    func initialize(uid: String) {
@@ -54,7 +54,7 @@ class MessageStore {
 //            .addSnapshotListener(self.onListen)
 //    }
     
-    private func onListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
+    private func snapshotListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
         guard let documents = querySnapshot?.documents else {
             print("Error fetching documents: \(error!)")
             return
@@ -78,13 +78,17 @@ class MessageStore {
             }
             return newMessages
         }
-
+        
         self.chatMessages = newMessages
     }
     
     
     
     func fetch() {
+        if self.uid.isEmpty {
+            return
+        }
+        
         db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
             .order(by: "created_at")
             .end(before: [self.firstItemTimestamp!])
@@ -131,7 +135,7 @@ class MessageStore {
     
     
     
-    func add(_ message: ChatMessage) {
+    func add(uid: String, _ message: ChatMessage) {
         do {
             try db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName).document(message.id).setData(from: message)
         } catch let error {
