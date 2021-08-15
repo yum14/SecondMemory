@@ -12,8 +12,6 @@ import FirebaseFirestore
 
 
 final class MessageStore {
-    static let shared = MessageStore()
-    
     var chatMessages: [ChatMessage] = []
     {
         didSet {
@@ -28,9 +26,9 @@ final class MessageStore {
     private let messagesCollectionName = "messages"
     private var onListen: ([ChatMessage]) -> Void = { _ in }
     private var uid: String = ""
-    var firstItemTimestamp: Timestamp? = nil
+    private var firstItemTimestamp: Timestamp? = nil
     
-    private init() {
+    init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings
@@ -44,16 +42,7 @@ final class MessageStore {
             .limit(toLast: 15)
             .addSnapshotListener(self.snapshotListen)
     }
-    
-//    func initialize(uid: String) {
-//        self.collectionName = self.collectionNamePrefix + uid
-//
-//        db.collection(self.collectionName!)
-//            .order(by: "createdAt")
-//            .limit(toLast: 15)
-//            .addSnapshotListener(self.onListen)
-//    }
-    
+
     private func snapshotListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
         guard let documents = querySnapshot?.documents else {
             print("Error fetching documents: \(error!)")

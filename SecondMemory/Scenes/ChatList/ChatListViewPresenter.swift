@@ -26,8 +26,8 @@ final class ChatListViewPresenter: ObservableObject {
     private var scrollToButtom = false
     
     init() {
-        self.vectorStore = VectorStore.shared
-        self.messageStore = MessageStore.shared
+        self.vectorStore = VectorStore()
+        self.messageStore = MessageStore()
     }
     
     init(messages: [ChatMessage]) {
