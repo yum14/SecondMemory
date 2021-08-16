@@ -17,6 +17,7 @@ struct MultiTextField: View {
     var onBeginEditing: () -> Void = {}
     
     var body: some View {
+        
         UITextViewWrapper(height: self.$height,
                           placeholder: "メッセージを入力",
                           text: self.$text,
@@ -84,10 +85,17 @@ struct RepresentableUITextView: UIViewRepresentable {
         return view
     }
     
-    
     func updateUIView(_ uiView: UITextView, context: Context) {
+        uiView.text = self.text
+        
         if self.isFirstResponder {
             uiView.becomeFirstResponder()
+        }
+        
+        if !uiView.isFirstResponder && self.text.isEmpty {
+            uiView.text = self.placeholder
+            uiView.textColor = UIColor.black.withAlphaComponent(0.35)
+            uiView.backgroundColor = .clear
         }
     }
 
@@ -100,8 +108,10 @@ struct RepresentableUITextView: UIViewRepresentable {
         
         func textViewDidBeginEditing(_ textView: UITextView) {
             // Viewを選択して入力開始する時にplaceholderを消している（色も変えてる）
-            textView.text = ""
-            textView.textColor = .black
+            if textView.textColor != .black {
+                textView.text = ""
+                textView.textColor = .black
+            }
             
             self.parent.onBeginEditing()
         }
@@ -111,13 +121,13 @@ struct RepresentableUITextView: UIViewRepresentable {
             self.parent.height = textView.contentSize.height
         }
         
-        func textViewDidEndEditing(_ textView: UITextView) {
-            if parent.text.isEmpty {
-                textView.text = self.parent.placeholder
-                textView.textColor = UIColor.black.withAlphaComponent(0.35)
-                textView.backgroundColor = .clear
-            }
-        }
+//        func textViewDidEndEditing(_ textView: UITextView) {
+//            if parent.text.isEmpty {
+//                textView.text = self.parent.placeholder
+//                textView.textColor = UIColor.black.withAlphaComponent(0.35)
+//                textView.backgroundColor = .clear
+//            }
+//        }
     }
 }
 

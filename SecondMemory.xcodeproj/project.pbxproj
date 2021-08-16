@@ -44,6 +44,7 @@
 		75CF531B2693469F00B4FE2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75CF53182693469E00B4FE2E /* GoogleService-Info.plist */; };
 		75E7F5AD26C91FC9000FFEFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5AC26C91FC9000FFEFC /* LoginView.swift */; };
 		75E7F5AF26C92122000FFEFC /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5AE26C92122000FFEFC /* LoginViewPresenter.swift */; };
+		75E7F5B126C94231000FFEFC /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5B026C94231000FFEFC /* SearchTextField.swift */; };
 		75F154302682140600F5530D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F1542F2682140600F5530D /* ChatMessage.swift */; };
 		75FDE3B3269318D700BA1285 /* InputChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDE3B2269318D700BA1285 /* InputChatView.swift */; };
 		9745C5B903C847EDCA341CB6 /* Pods_SecondMemory_SecondMemoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 383A45CA19E96167E11E27A8 /* Pods_SecondMemory_SecondMemoryUITests.framework */; };
@@ -114,6 +115,7 @@
 		75CF53182693469E00B4FE2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		75E7F5AC26C91FC9000FFEFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		75E7F5AE26C92122000FFEFC /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
+		75E7F5B026C94231000FFEFC /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
 		75F1542F2682140600F5530D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		75FDE3B2269318D700BA1285 /* InputChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputChatView.swift; sourceTree = "<group>"; };
 		7EF8ACF803485FC169BA4E78 /* Pods_SecondMemory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondMemory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +185,7 @@
 				75FDE3B2269318D700BA1285 /* InputChatView.swift */,
 				75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */,
 				75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */,
+				75E7F5B026C94231000FFEFC /* SearchTextField.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
 				75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */,
 				753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */,
+				75E7F5B126C94231000FFEFC /* SearchTextField.swift in Sources */,
 				752249E126B0457600031E3C /* RandomAccessCollectionExtension.swift in Sources */,
 				7562253926A4806C008E001B /* CdistResponse.swift in Sources */,
 				75F154302682140600F5530D /* ChatMessage.swift in Sources */,

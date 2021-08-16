@@ -16,6 +16,7 @@ final class ChatListViewPresenter: ObservableObject {
     @Published var loadId = ""
     @Published var searching = false
     @Published var scrollViewProxy: ScrollViewProxy? = nil
+    @Published var showSearchText = false
     
     private var uid: String? = nil
     private var idToken: String? = nil
@@ -37,16 +38,19 @@ final class ChatListViewPresenter: ObservableObject {
     }
     
     func botIconTapped() {
-        let text = "検索ワードをチャットしてけろ。"
+//        let text = "検索ワードをチャットしてけろ。"
+//
+//        guard let uid = self.uid else {
+//            return
+//        }
+//        // firestoreにデータ追加
+//        let doc = ChatMessage(type: .bot, contents: [ChatMessageContent(text: text)])
+//        self.messageStore?.add(uid: uid, doc)
+//        self.searching = true
+//        self.inputText = "> "
         
-        guard let uid = self.uid else {
-            return
-        }
-        // firestoreにデータ追加
-        let doc = ChatMessage(type: .bot, contents: [ChatMessageContent(text: text)])
-        self.messageStore?.add(uid: uid, doc)
-        self.searching = true
-        self.inputText = "> "
+        
+        self.showSearchText = true
     }
     
     func listItemAppear(item: ChatMessage) -> Void {
@@ -93,8 +97,8 @@ final class ChatListViewPresenter: ObservableObject {
         if self.searching {
             self.searching.toggle()
         }
-        
-        scrollToButtom = true
+
+        self.scrollToButtom = true
     }
     
     func textInputDismiss() {
@@ -111,9 +115,19 @@ final class ChatListViewPresenter: ObservableObject {
         if selectedIndex + 12 >= lastIndex {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {[weak self] in
                 if let self = self {
-                    self.scrollViewProxy?.scrollTo(self.messages.last!.id, anchor: .top)
+                    //                    withAnimation {
+                    self.scrollViewProxy?.scrollTo(self.messages.last!.id, anchor: .bottom)
+                    //                    }
                 }
             })
+            
+//            DispatchQueue.main.async(execute: {[weak self] in
+//                if let self = self {
+////                    withAnimation {
+//                    self.scrollViewProxy?.scrollTo(self.messages.last!.id, anchor: .bottom)
+////                    }
+//                }
+//            })
         }
     }
 
