@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InputChatView: View {
-    @State private var height: CGFloat = 36
     @Binding var text: String
     var searching = false
     var onCommit: () -> Void = {}
@@ -19,22 +18,20 @@ struct InputChatView: View {
         HStack(alignment: .bottom, spacing: 4) {
             
             MultiTextField(text: self.$text,
-                           height: self.$height,
-                           isFirstResponder: self.searching,
+                           becomeFirstResponder: self.searching,
                            onBeginEditing: self.onBeginEditing)
             
             VStack(spacing: 0) {
                 Button(action: {
-                    
                     self.onCommit()
 
-                    self.text = ""
-                    self.height = 36
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        self.text = ""
+                    }
                     
                     UIApplication.shared.closeKeyboard()
                     
                     self.onDismiss()
-                    
                 }) {
                     Image(systemName: "paperplane.fill")
                         .resizable()
