@@ -17,6 +17,7 @@ final class ChatListViewPresenter: ObservableObject {
     @Published var searching = false
     @Published var scrollViewProxy: ScrollViewProxy? = nil
     @Published var showSearchText = false
+    @Published var searchText = ""
     
     private var uid: String? = nil
     private var idToken: String? = nil
@@ -38,19 +39,30 @@ final class ChatListViewPresenter: ObservableObject {
     }
     
     func botIconTapped() {
-//        let text = "検索ワードをチャットしてけろ。"
-//
-//        guard let uid = self.uid else {
-//            return
-//        }
-//        // firestoreにデータ追加
-//        let doc = ChatMessage(type: .bot, contents: [ChatMessageContent(text: text)])
-//        self.messageStore?.add(uid: uid, doc)
-//        self.searching = true
-//        self.inputText = "> "
-        
-        
         self.showSearchText = true
+    }
+    
+    func searchTextFieldCommit() {
+        
+        if !searchText.isEmpty, let uid = self.uid {
+            // top5まで似た文章を取得
+            let cdistApiClient = CdistApiClient(idToken: self.idToken!)
+            cdistApiClient.get(search: self.searchText, completion: { [weak self] response in
+                let doc = ChatMessage(type: .search, contents: response.result.sorted(by: { $1.score < $0.score }).map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
+                
+                print("********* 検索結果 *********")
+                doc.contents.forEach {
+                    print("id:\($0.id), sentence:\($0.text), score:\(String($0.score ?? 0))")
+                }
+                
+                if let self = self {
+                    self.messageStore?.add(uid: uid, doc)
+                }
+            })
+        }
+        
+        self.searchText = ""
+        self.showSearchText = false
     }
     
     func listItemAppear(item: ChatMessage) -> Void {
@@ -71,28 +83,28 @@ final class ChatListViewPresenter: ObservableObject {
         
         let contentId = UUID().uuidString
         // firestoreにデータ追加
-        let doc = ChatMessage(type: .mine, contents: [ChatMessageContent(id: contentId, text: self.inputText)])
+        let doc = ChatMessage(id: contentId, type: .mine, contents: [ChatMessageContent(id: contentId, text: self.inputText)])
         self.messageStore?.add(uid: uid, doc)
         
         
-        if self.inputText.hasPrefix("> ") {
-            let search = String(self.inputText.suffix(self.inputText.count - 2))
-            
-            // top5まで似た文章を取得
-            let cdistApiClient = CdistApiClient(idToken: self.idToken!)
-            cdistApiClient.get(search: search, completion: { [weak self] response in
-                let doc = ChatMessage(type: .search, contents: response.result.map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
-                
-                if let self = self {
-                    self.messageStore?.add(uid: uid, doc)
-                }
-            })
-            
-        } else {
+//        if self.inputText.hasPrefix("> ") {
+//            let search = String(self.inputText.suffix(self.inputText.count - 2))
+//
+//            // top5まで似た文章を取得
+//            let cdistApiClient = CdistApiClient(idToken: self.idToken!)
+//            cdistApiClient.get(search: search, completion: { [weak self] response in
+//                let doc = ChatMessage(type: .search, contents: response.result.map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
+//
+//                if let self = self {
+//                    self.messageStore?.add(uid: uid, doc)
+//                }
+//            })
+//
+//        } else {
             // ベクトル化して保存
             let vectorEncodeApiClient = VectorEncodeApiClient(idToken: idToken!)
             vectorEncodeApiClient.post(id: contentId, sentence: self.inputText)
-        }
+//        }
         
         if self.searching {
             self.searching.toggle()
@@ -108,28 +120,27 @@ final class ChatListViewPresenter: ObservableObject {
     }
     
     func inputBeginEditing() {
-        let selectedIndex = self.messages.firstIndex(where: { $0.id == self.loadId })!
-        let lastIndex = self.messages.firstIndex(where: {$0.id == self.messages.last!.id})!
+        let selectedIndex = self.messages.firstIndex(where: { $0.id == self.loadId })
+        let lastIndex = self.messages.firstIndex(where: {$0.id == self.messages.last?.id ?? ""})
         
-        // リストの最下部が表示されているとき（おおよそ・・）、キーボード表示に合わせて最下部が隠れてしまわないようにスクロールする
-        if selectedIndex + 12 >= lastIndex {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {[weak self] in
-                if let self = self {
-                    //                    withAnimation {
-                    self.scrollViewProxy?.scrollTo(self.messages.last!.id, anchor: .bottom)
-                    //                    }
-                }
-            })
-            
-//            DispatchQueue.main.async(execute: {[weak self] in
-//                if let self = self {
-////                    withAnimation {
-//                    self.scrollViewProxy?.scrollTo(self.messages.last!.id, anchor: .bottom)
-////                    }
-//                }
-//            })
+        if let selected = selectedIndex, let last = lastIndex {
+            // リストの最下部が表示されているとき（おおよそ・・）、キーボード表示に合わせて最下部が隠れてしまわないようにスクロールする
+            if selected + 12 >= last {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {[weak self] in
+                    if let self = self, let lastItem = self.messages.last {
+                        self.scrollViewProxy?.scrollTo(lastItem.id, anchor: .bottom)
+                    }
+                })
+            }
         }
     }
+    
+    func moveMessage(id: String) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {[weak self] in
+            self?.scrollViewProxy?.scrollTo(id, anchor: .top)
+        })
+    }
+    
 
     func deleteVector(id: String) -> Void {
         guard let uid = self.uid else {

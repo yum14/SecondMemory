@@ -9,11 +9,17 @@ import SwiftUI
 
 struct SearchTextField: View {
     @Binding var text: String
+    @State private var isFirstResponder = true
+    var onCommit: () -> Void = {}
     
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-            TextField("プレースホルダー", text: self.$text)
+            CustomTextField("検索する", text: self.$text, isFirstResponder: self.isFirstResponder, onCommit: self.onCommit)
+                .frame(height: 22)
+                .autocapitalization(.none)
+//                .padding()
+//            TextField("検索する", text: self.$text)
         }
         .padding()
         .background(Color.secondary)

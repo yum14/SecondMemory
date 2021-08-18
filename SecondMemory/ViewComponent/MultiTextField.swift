@@ -82,7 +82,6 @@ struct RepresentableUITextView: UIViewRepresentable {
         view.isEditable = true
         view.isUserInteractionEnabled = true
         view.isScrollEnabled = true
-        self.isFirstResponder = view.isFirstResponder
         
         return view
     }

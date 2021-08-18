@@ -39,7 +39,7 @@ final class MessageStore {
         self.onListen = onListen
         db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
             .order(by: "created_at")
-            .limit(toLast: 15)
+//            .limit(toLast: 15)
             .addSnapshotListener(self.snapshotListen)
     }
 

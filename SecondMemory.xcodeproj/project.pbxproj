@@ -45,6 +45,7 @@
 		75E7F5AD26C91FC9000FFEFC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5AC26C91FC9000FFEFC /* LoginView.swift */; };
 		75E7F5AF26C92122000FFEFC /* LoginViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5AE26C92122000FFEFC /* LoginViewPresenter.swift */; };
 		75E7F5B126C94231000FFEFC /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5B026C94231000FFEFC /* SearchTextField.swift */; };
+		75E7F5B326CB7BE7000FFEFC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E7F5B226CB7BE7000FFEFC /* CustomTextField.swift */; };
 		75F154302682140600F5530D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F1542F2682140600F5530D /* ChatMessage.swift */; };
 		75FDE3B3269318D700BA1285 /* InputChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDE3B2269318D700BA1285 /* InputChatView.swift */; };
 		9745C5B903C847EDCA341CB6 /* Pods_SecondMemory_SecondMemoryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 383A45CA19E96167E11E27A8 /* Pods_SecondMemory_SecondMemoryUITests.framework */; };
@@ -116,6 +117,7 @@
 		75E7F5AC26C91FC9000FFEFC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		75E7F5AE26C92122000FFEFC /* LoginViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewPresenter.swift; sourceTree = "<group>"; };
 		75E7F5B026C94231000FFEFC /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		75E7F5B226CB7BE7000FFEFC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		75F1542F2682140600F5530D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		75FDE3B2269318D700BA1285 /* InputChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputChatView.swift; sourceTree = "<group>"; };
 		7EF8ACF803485FC169BA4E78 /* Pods_SecondMemory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SecondMemory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +188,7 @@
 				75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */,
 				75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */,
 				75E7F5B026C94231000FFEFC /* SearchTextField.swift */,
+				75E7F5B226CB7BE7000FFEFC /* CustomTextField.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				75E7F5AD26C91FC9000FFEFC /* LoginView.swift in Sources */,
 				75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */,
 				753A7CA0269F146400145D4A /* VectorEncodeRequest.swift in Sources */,
+				75E7F5B326CB7BE7000FFEFC /* CustomTextField.swift in Sources */,
 				754C7291269154E7009F0A5F /* MultiTextField.swift in Sources */,
 				7530CA7B267F8A1200941539 /* ContentView.swift in Sources */,
 				754DB8EB2695D8CA004AB524 /* FirebaseUIView.swift in Sources */,

@@ -36,7 +36,7 @@ struct ChatListView: View {
                                             .padding(.bottom, 12)
                                     } else {
                                         BotSearchResultView(messages: message.contents,
-                                                            onMovePressed: { _ in },
+                                                            onMovePressed: self.presenter.moveMessage,
                                                             onDeletePressed: self.presenter.deleteVector)
                                             .layoutPriority(1)
                                             .padding(.trailing, 50)
@@ -90,8 +90,15 @@ struct ChatListView: View {
                 
             }
             .blur(radius: self.presenter.showSearchText ? 15.0 : 0.0)
+            .onTapGesture {
+                self.presenter.showSearchText = false
+            }
             
-            
+            if self.presenter.showSearchText {
+                withAnimation {
+                    SearchTextField(text: self.$presenter.searchText, onCommit: self.presenter.searchTextFieldCommit)
+                }
+            }
             
         }
         .onAppear {
