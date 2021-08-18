@@ -90,6 +90,7 @@ struct ChatListView: View {
                 
             }
             .blur(radius: self.presenter.showSearchText ? 15.0 : 0.0)
+            .disabled(self.presenter.showSearchText)
             .onTapGesture {
                 self.presenter.showSearchText = false
             }
