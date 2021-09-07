@@ -23,6 +23,7 @@ final class ChatListViewPresenter: ObservableObject {
     private var idToken: String? = nil
     private let messageStore: MessageStore?
     private let vectorStore: VectorStore?
+    private let messageCacheStore: MessageCacheStore?
     private var isFirstRead = true
     private var isFirstResponder = true
     private var scrollToButtom = false
@@ -30,12 +31,14 @@ final class ChatListViewPresenter: ObservableObject {
     init() {
         self.vectorStore = VectorStore()
         self.messageStore = MessageStore()
+        self.messageCacheStore = MessageCacheStore()
     }
     
     init(messages: [ChatMessage]) {
         self.messages = messages
         self.vectorStore = nil
         self.messageStore = nil
+        self.messageCacheStore = nil
     }
     
     func botIconTapped() {
@@ -47,7 +50,9 @@ final class ChatListViewPresenter: ObservableObject {
         if !searchText.isEmpty, let uid = self.uid {
             // top5まで似た文章を取得
             let cdistApiClient = CdistApiClient(idToken: self.idToken!)
+            
             cdistApiClient.get(search: self.searchText, completion: { [weak self] response in
+                
                 let doc = ChatMessage(type: .search, contents: response.result.sorted(by: { $1.score < $0.score }).map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
                 
                 print("********* 検索結果 *********")
@@ -55,8 +60,14 @@ final class ChatListViewPresenter: ObservableObject {
                     print("id:\($0.id), sentence:\($0.text), score:\(String($0.score ?? 0))")
                 }
                 
-                if let self = self {
-                    self.messageStore?.add(uid: uid, doc)
+                guard let self = self else{
+                    return
+                }
+                
+                self.messageStore?.add(uid: uid, doc)
+                
+                DispatchQueue.global(qos: .background).async {
+                    self.messageCacheStore?.add(doc.toCache(uid: uid))
                 }
             })
         }
@@ -65,12 +76,12 @@ final class ChatListViewPresenter: ObservableObject {
         self.showSearchText = false
     }
     
-    func listItemAppear(item: ChatMessage) -> Void {
-        if self.messages.isFirstItem(item) && !self.isFirstResponder && !self.isFirstRead {
-            // 新しいページデータを取得
-            self.messageStore?.fetch()
-        }
-    }
+//    func listItemAppear(item: ChatMessage) -> Void {
+//        if self.messages.isFirstItem(item) && !self.isFirstResponder && !self.isFirstRead {
+//            // 新しいページデータを取得
+//            self.messageStore?.fetch()
+//        }
+//    }
     
     func textInputCommit() {
         guard let uid = self.uid else {
@@ -84,32 +95,23 @@ final class ChatListViewPresenter: ObservableObject {
         let contentId = UUID().uuidString
         // firestoreにデータ追加
         let doc = ChatMessage(id: contentId, type: .mine, contents: [ChatMessageContent(id: contentId, text: self.inputText)])
+
+        // キャッシュはListenerで追加する
         self.messageStore?.add(uid: uid, doc)
         
-        
-//        if self.inputText.hasPrefix("> ") {
-//            let search = String(self.inputText.suffix(self.inputText.count - 2))
-//
-//            // top5まで似た文章を取得
-//            let cdistApiClient = CdistApiClient(idToken: self.idToken!)
-//            cdistApiClient.get(search: search, completion: { [weak self] response in
-//                let doc = ChatMessage(type: .search, contents: response.result.map { ChatMessageContent(id: $0.id, text: $0.sentence, score: $0.score) })
-//
-//                if let self = self {
-//                    self.messageStore?.add(uid: uid, doc)
-//                }
-//            })
-//
-//        } else {
+        DispatchQueue.global(qos: .background).async {[weak self] in
+            guard let self = self else{
+                return
+            }
             // ベクトル化して保存
-            let vectorEncodeApiClient = VectorEncodeApiClient(idToken: idToken!)
+            let vectorEncodeApiClient = VectorEncodeApiClient(idToken: self.idToken!)
             vectorEncodeApiClient.post(id: contentId, sentence: self.inputText)
-//        }
+        }
         
         if self.searching {
             self.searching.toggle()
         }
-
+        
         self.scrollToButtom = true
     }
     
@@ -141,7 +143,6 @@ final class ChatListViewPresenter: ObservableObject {
         })
     }
     
-
     func deleteVector(id: String) -> Void {
         guard let uid = self.uid else {
             return
@@ -155,13 +156,12 @@ final class ChatListViewPresenter: ObservableObject {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {[weak self] in
                     withAnimation {
                         // 一番下にスクロールする
-                        self?.scrollViewProxy?.scrollTo(newValue.count - 1, anchor: .bottom)
+                        self?.scrollViewProxy?.scrollTo(newValue.last!.id, anchor: .bottom)
                         
                         self?.isFirstRead = false
                         self?.scrollToButtom = false
                     }
                 })
-
             }
         }
     }
@@ -171,16 +171,42 @@ final class ChatListViewPresenter: ObservableObject {
             self.uid = uid
             self.idToken = idToken
             
-            messageStore?.setListener(uid: uid, onListen: {[weak self] newMessages in
-                if let self = self {
-                    self.messages = newMessages
-                    print("firstCount: \(self.messages.count)")
+            // 古いキャッシュを削除
+            self.messageCacheStore?.removeOldItems(to: 600)
+            
+            // キャッシュからデータ取得
+            let caches = messageCacheStore?.getAll(uid: uid).map { $0.toContent() }
+            
+            if let caches = caches, caches.count > 0 {
+                self.messages = caches
+                
+                caches.forEach {
+                    print("*** cache *** \($0.contents[0].text)")
                 }
+            }
+            
+            messageStore?.setListener(uid: uid, initial: caches ?? [], onListen: {[weak self] newMessages in
+                guard let self = self else {
+                    return
+                }
+                
+                newMessages.forEach {
+                    print("*** firestore *** \($0.contents[0].text)")
+                }
+                
+                // サーバー上のデータをキャッシュに保存
+                for message in newMessages {
+                    self.messageCacheStore?.add(message.toCache(uid: self.uid!))
+                }
+                
+                // ディープコピー
+                var obj = self.messages.map { $0 }
+                obj.append(contentsOf: newMessages)
+                
+                self.messages = obj
             })
             
             self.isFirstResponder.toggle()
         }
-
     }
-        
 }

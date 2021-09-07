@@ -22,6 +22,7 @@
 		7530CA8B267F8A1300941539 /* SecondMemoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CA8A267F8A1300941539 /* SecondMemoryTests.swift */; };
 		7530CA96267F8A1300941539 /* SecondMemoryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CA95267F8A1300941539 /* SecondMemoryUITests.swift */; };
 		7530CAA4267F8CC500941539 /* BotImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7530CAA3267F8CC500941539 /* BotImageView.swift */; };
+		7539C9C126E114C3009933D5 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7539C9C026E114C3009933D5 /* DateUtility.swift */; };
 		753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753A7C9C269F0AB300145D4A /* VectorEncodeApiClient.swift */; };
 		753A7CA0269F146400145D4A /* VectorEncodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753A7C9F269F146400145D4A /* VectorEncodeRequest.swift */; };
 		754C728F268F5C8D009F0A5F /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754C728E268F5C8D009F0A5F /* ChatListView.swift */; };
@@ -33,7 +34,11 @@
 		7562253926A4806C008E001B /* CdistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253826A4806C008E001B /* CdistResponse.swift */; };
 		7562253B26A481F4008E001B /* CdistApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253A26A481F4008E001B /* CdistApiClient.swift */; };
 		7562253D26A4871D008E001B /* ResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562253C26A4871D008E001B /* ResponseError.swift */; };
+		7589AA9826D12B4600A15E65 /* ChatMessageCaches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7589AA9726D12B4600A15E65 /* ChatMessageCaches.swift */; };
+		7589AA9A26D214CC00A15E65 /* MessageCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7589AA9926D214CC00A15E65 /* MessageCacheStore.swift */; };
+		7589AA9C26D2163500A15E65 /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7589AA9B26D2163500A15E65 /* RealmHelper.swift */; };
 		758AF8F426AC603F00F4FCC7 /* VectorStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758AF8F326AC603F00F4FCC7 /* VectorStore.swift */; };
+		75BCFB7526D1280800EB210F /* ChatMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BCFB7426D1280800EB210F /* ChatMessageCache.swift */; };
 		75C6E8A926ABEF770037BA21 /* FirebaseAuthUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75C6E8A726ABEF770037BA21 /* FirebaseAuthUI.strings */; };
 		75C6E8AB26ABF79B0037BA21 /* BotSearchResultRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */; };
 		75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C6E8AC26ABFCAA0037BA21 /* BotSearchResultView.swift */; };
@@ -95,6 +100,7 @@
 		7530CA95267F8A1300941539 /* SecondMemoryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondMemoryUITests.swift; sourceTree = "<group>"; };
 		7530CA97267F8A1300941539 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7530CAA3267F8CC500941539 /* BotImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotImageView.swift; sourceTree = "<group>"; };
+		7539C9C026E114C3009933D5 /* DateUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
 		753A7C9C269F0AB300145D4A /* VectorEncodeApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorEncodeApiClient.swift; sourceTree = "<group>"; };
 		753A7C9F269F146400145D4A /* VectorEncodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorEncodeRequest.swift; sourceTree = "<group>"; };
 		754C728E268F5C8D009F0A5F /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
@@ -106,7 +112,11 @@
 		7562253826A4806C008E001B /* CdistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdistResponse.swift; sourceTree = "<group>"; };
 		7562253A26A481F4008E001B /* CdistApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdistApiClient.swift; sourceTree = "<group>"; };
 		7562253C26A4871D008E001B /* ResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseError.swift; sourceTree = "<group>"; };
+		7589AA9726D12B4600A15E65 /* ChatMessageCaches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCaches.swift; sourceTree = "<group>"; };
+		7589AA9926D214CC00A15E65 /* MessageCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCacheStore.swift; sourceTree = "<group>"; };
+		7589AA9B26D2163500A15E65 /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 		758AF8F326AC603F00F4FCC7 /* VectorStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorStore.swift; sourceTree = "<group>"; };
+		75BCFB7426D1280800EB210F /* ChatMessageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCache.swift; sourceTree = "<group>"; };
 		75C6E8A326A94AF10037BA21 /* SecondMemory.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SecondMemory.entitlements; sourceTree = "<group>"; };
 		75C6E8A826ABEF770037BA21 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = FirebaseAuthUI.strings; sourceTree = "<group>"; };
 		75C6E8AA26ABF79B0037BA21 /* BotSearchResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotSearchResultRowView.swift; sourceTree = "<group>"; };
@@ -163,6 +173,8 @@
 				75CF531426933C3A00B4FE2E /* DateFormatterExtension.swift */,
 				752249E026B0457600031E3C /* RandomAccessCollectionExtension.swift */,
 				752D681126BEE2720091CD7E /* ApiClient.swift */,
+				7589AA9B26D2163500A15E65 /* RealmHelper.swift */,
+				7539C9C026E114C3009933D5 /* DateUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -212,6 +224,8 @@
 				7562253C26A4871D008E001B /* ResponseError.swift */,
 				75F1542F2682140600F5530D /* ChatMessage.swift */,
 				752D681526C0F8150091CD7E /* User.swift */,
+				75BCFB7426D1280800EB210F /* ChatMessageCache.swift */,
+				7589AA9726D12B4600A15E65 /* ChatMessageCaches.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -290,6 +304,7 @@
 				752D681326C0F64E0091CD7E /* UserStore.swift */,
 				75CF531626933FEC00B4FE2E /* MessageStore.swift */,
 				758AF8F326AC603F00F4FCC7 /* VectorStore.swift */,
+				7589AA9926D214CC00A15E65 /* MessageCacheStore.swift */,
 				753A7C9C269F0AB300145D4A /* VectorEncodeApiClient.swift */,
 				7562253A26A481F4008E001B /* CdistApiClient.swift */,
 				754DB8EC2695D9D1004AB524 /* FirebaseAuthStateObserver.swift */,
@@ -628,6 +643,8 @@
 				752A847B268204FD00E3BD2A /* MyMessageView.swift in Sources */,
 				7562253D26A4871D008E001B /* ResponseError.swift in Sources */,
 				754C728F268F5C8D009F0A5F /* ChatListView.swift in Sources */,
+				7589AA9A26D214CC00A15E65 /* MessageCacheStore.swift in Sources */,
+				7589AA9826D12B4600A15E65 /* ChatMessageCaches.swift in Sources */,
 				752A84772680CCA700E3BD2A /* UIColorHex.swift in Sources */,
 				75C6E8AD26ABFCAA0037BA21 /* BotSearchResultView.swift in Sources */,
 				753A7C9D269F0AB300145D4A /* VectorEncodeApiClient.swift in Sources */,
@@ -638,6 +655,8 @@
 				75E7F5AF26C92122000FFEFC /* LoginViewPresenter.swift in Sources */,
 				75E7F5AD26C91FC9000FFEFC /* LoginView.swift in Sources */,
 				75CF531726933FEC00B4FE2E /* MessageStore.swift in Sources */,
+				7539C9C126E114C3009933D5 /* DateUtility.swift in Sources */,
+				75BCFB7526D1280800EB210F /* ChatMessageCache.swift in Sources */,
 				753A7CA0269F146400145D4A /* VectorEncodeRequest.swift in Sources */,
 				75E7F5B326CB7BE7000FFEFC /* CustomTextField.swift in Sources */,
 				754C7291269154E7009F0A5F /* MultiTextField.swift in Sources */,
@@ -648,6 +667,7 @@
 				752D681426C0F64E0091CD7E /* UserStore.swift in Sources */,
 				754DB8ED2695D9D1004AB524 /* FirebaseAuthStateObserver.swift in Sources */,
 				75FDE3B3269318D700BA1285 /* InputChatView.swift in Sources */,
+				7589AA9C26D2163500A15E65 /* RealmHelper.swift in Sources */,
 				7562253326A25AA8008E001B /* VectorEncodeResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

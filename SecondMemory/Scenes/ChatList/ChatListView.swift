@@ -45,10 +45,10 @@ struct ChatListView: View {
                                     }
                                 }
                                 .id(message.id)
-                                .onAppear {
-                                    self.presenter.loadId = message.id
-                                    self.presenter.listItemAppear(item: message)
-                                }
+//                                .onAppear {
+//                                    self.presenter.loadId = message.id
+//                                    self.presenter.listItemAppear(item: message)
+//                                }
                             }
                         }
                     }

@@ -26,7 +26,7 @@ final class MessageStore {
     private let messagesCollectionName = "messages"
     private var onListen: ([ChatMessage]) -> Void = { _ in }
     private var uid: String = ""
-    private var firstItemTimestamp: Timestamp? = nil
+//    private var firstItemTimestamp: Timestamp? = nil
     
     init() {
         let settings = FirestoreSettings()
@@ -34,13 +34,29 @@ final class MessageStore {
         db.settings = settings
     }
     
-    func setListener(uid: String, onListen: @escaping (_ newValue: [ChatMessage]) -> Void = { _ in }) {
+    func setListener(uid: String, initial: [ChatMessage], onListen: @escaping (_ newValue: [ChatMessage]) -> Void = { _ in }) {
         self.uid = uid
+        self.chatMessages = initial
         self.onListen = onListen
-        db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
-            .order(by: "created_at")
-//            .limit(toLast: 15)
-            .addSnapshotListener(self.snapshotListen)
+        
+        if let last = initial.last {
+            let modifiedDate = Calendar.current.date(byAdding: .second, value: 1, to: last.createdAt.dateValue())!
+            
+            db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
+//                .order(by: "created_at", descending: true)
+                .order(by: "created_at")
+//                .start(after: [Timestamp(date: dt)])
+                .start(after: [Timestamp(date: modifiedDate)])
+
+    //            .limit(toLast: 15)
+                .addSnapshotListener(self.snapshotListen)
+        } else {
+            db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
+//                .order(by: "created_at", descending: true)
+                .order(by: "created_at")
+    //            .limit(toLast: 15)
+                .addSnapshotListener(self.snapshotListen)
+        }
     }
 
     private func snapshotListen(_ querySnapshot: QuerySnapshot?, _ error: Error?) {
@@ -53,12 +69,11 @@ final class MessageStore {
             return
         }
         
-        let firstItem = self.map(snapshot: documents.first!)
-        guard let firstItem = firstItem else {
-            return
-        }
-        self.firstItemTimestamp = firstItem.createdAt
-        
+//        let firstItem = self.map(snapshot: documents.first!)
+//        guard let firstItem = firstItem else {
+//            return
+//        }
+//        self.firstItemTimestamp = firstItem.createdAt
         
         let newMessages: [ChatMessage] = documents.reduce([]) {
             var newMessages = $0
@@ -68,42 +83,44 @@ final class MessageStore {
             return newMessages
         }
         
-        self.chatMessages = newMessages
+        self.chatMessages.append(contentsOf: newMessages)
+        
+//        self.chatMessages = newMessages
     }
     
     
     
-    func fetch() {
-        if self.uid.isEmpty {
-            return
-        }
-        
-        db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
-            .order(by: "created_at")
-            .end(before: [self.firstItemTimestamp!])
-            .limit(toLast: 15)
-            .getDocuments(completion: { (snapshot, error) in
-                
-                guard let documents = snapshot?.documents else {
-                    print("Error fetching documents: \(error!)")
-                    return
-                }
-
-                let newMessages: [ChatMessage] = documents.reduce([]) {
-                    var newMessages = $0
-                    if let newMessage = self.map(snapshot: $1) {
-                        newMessages.append(newMessage)
-                    }
-                    return newMessages
-                }
-                
-                if newMessages.count > 0 {
-                    self.firstItemTimestamp = newMessages.first!.createdAt
-                    self.chatMessages.insert(contentsOf: newMessages, at: 0)
-                }
-            })
-        
-    }
+//    func fetch() {
+//        if self.uid.isEmpty {
+//            return
+//        }
+//
+//        db.collection(self.usersCollectionName).document(uid).collection(self.messagesCollectionName)
+//            .order(by: "created_at")
+//            .end(before: [self.firstItemTimestamp!])
+//            .limit(toLast: 15)
+//            .getDocuments(completion: { (snapshot, error) in
+//
+//                guard let documents = snapshot?.documents else {
+//                    print("Error fetching documents: \(error!)")
+//                    return
+//                }
+//
+//                let newMessages: [ChatMessage] = documents.reduce([]) {
+//                    var newMessages = $0
+//                    if let newMessage = self.map(snapshot: $1) {
+//                        newMessages.append(newMessage)
+//                    }
+//                    return newMessages
+//                }
+//
+//                if newMessages.count > 0 {
+//                    self.firstItemTimestamp = newMessages.first!.createdAt
+//                    self.chatMessages.insert(contentsOf: newMessages, at: 0)
+//                }
+//            })
+//
+//    }
     
     private func map(snapshot: QueryDocumentSnapshot) -> ChatMessage? {
         let result = Result {
