@@ -11,7 +11,8 @@ import Firebase
 struct ContentView: View {
     @EnvironmentObject var authState: FirebaseAuthStateObserver
     @State var isShowSheet = false
-    @StateObject var chatListViewPresenter = ChatListViewPresenter()
+    @State var chatListViewPresenter = ChatListViewPresenter()
+    var loginViewPresenter = LoginViewPresenter()
     
     var body: some View {
         NavigationView {
@@ -27,6 +28,10 @@ struct ContentView: View {
                                     Button("ログアウト") {
                                         do {
                                             try Auth.auth().signOut()
+                                            
+                                            // presenter初期化
+                                            self.chatListViewPresenter = ChatListViewPresenter()
+                                            
                                         } catch let error {
                                             print(error.localizedDescription)
                                         }
@@ -34,11 +39,7 @@ struct ContentView: View {
                                 }
                             }                    }
                     else {
-                        Text("You are not logged in.")
-                            .padding()
-                        Button("login") {
-                            isShowSheet.toggle()
-                        }
+                        LoginView(presenter: self.loginViewPresenter)
                     }
                 } else {
                     Text("Loading.....")
@@ -46,9 +47,6 @@ struct ContentView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
         }
-        .sheet(isPresented: $isShowSheet, content: {
-            FirebaseUIView()
-        })
     }
 }
 

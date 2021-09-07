@@ -9,14 +9,11 @@ import Foundation
 import Firebase
 
 final class VectorStore: ObservableObject {
-    static let shared = VectorStore()
-    
-    let db = Firestore.firestore()
-    
+    private let db = Firestore.firestore()
     private let usersCollectionName = "users"
     private let vectorsCollectionName = "vectors"
     
-    private init() {
+    init() {
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         db.settings = settings

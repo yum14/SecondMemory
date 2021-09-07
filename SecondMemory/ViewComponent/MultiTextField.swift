@@ -10,44 +10,53 @@ import SwiftUI
 
 struct MultiTextField: View {
     @Binding var text: String
-    
-    // いまいちだけど制御難しいからクリアしたときのheight(36)は外から指定させる
-    @Binding var height: CGFloat
-    var isFirstResponder = false
+    @State var height: CGFloat = 36
+    @State var isFirstResponder: Bool = false
+    var becomeFirstResponder = false
     var onBeginEditing: () -> Void = {}
+    var inisitalText: String = ""
+    @State var showPlaceholder = true
     
     var body: some View {
-        UITextViewWrapper(height: self.$height,
-                          placeholder: "メッセージを入力",
-                          text: self.$text,
-                          isFirstResponder: self.isFirstResponder,
-                          onBeginEditing: self.onBeginEditing)
-            .padding(4)
-            .background(Color.secondary)
-            .cornerRadius(16)
+        ZStack(alignment: .leading) {
+            if self.showPlaceholder {
+                Text("メッセージを入力")
+                    .padding(.leading, 8)
+                    .foregroundColor(.secondary)
+            }
+            
+            RepresentableUITextView(height: $height,
+                                    text: self.$text,
+                                    isFirstResponder: self.$isFirstResponder,
+                                    becomeFirstResponder: self.becomeFirstResponder,
+                                    onBeginEditing: self.onBeginEditing,
+                                    initialText: self.inisitalText)
+                .frame(height: self.height < 150 ? self.height : 150)
+                .padding(4)
+                .background(Color.secondary)
+                .cornerRadius(16)
+                .onChange(of: self.text, perform: { value in
+                    if self.text.isEmpty {
+                        self.height = 36
+                        
+                        if self.isFirstResponder {
+                            self.showPlaceholder = true
+                        } else {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                                self.showPlaceholder = true
+                            })
+                        }
+                    } else {
+                        self.showPlaceholder = false
+                    }
+                })
+        }
     }
 }
 
 struct MultiTextField_Previews: PreviewProvider {
     static var previews: some View {
-        MultiTextField(text: .constant(""), height: .constant(36))
-    }
-}
-
-struct UITextViewWrapper: View {
-    @Binding var height: CGFloat
-    var placeholder: String?
-    @Binding var text: String
-    var isFirstResponder = false
-    var onBeginEditing: () -> Void = {}
-    
-    var body: some View {
-        RepresentableUITextView(height: $height,
-                                placeholder: self.placeholder,
-                                text: self.$text,
-                                isFirstResponder: self.isFirstResponder,
-                                onBeginEditing: self.onBeginEditing)
-            .frame(height: self.height < 150 ? self.height : 150)
+        MultiTextField(text: .constant(""))
     }
 }
 
@@ -57,40 +66,37 @@ struct RepresentableUITextView: UIViewRepresentable {
     }
     
     @Binding var height: CGFloat
-    var placeholder: String? = "テキストを入力"
     @Binding var text: String
-    var isFirstResponder = false
+    @Binding var isFirstResponder: Bool
+    var becomeFirstResponder = false
     var onBeginEditing: () -> Void = {}
+    var initialText: String = ""
     
     func makeUIView(context: UIViewRepresentableContext<RepresentableUITextView>) -> UITextView {
         let view = UITextView()
         view.font = .systemFont(ofSize: 16)
         
-        if self.text.isEmpty {
-            view.text = placeholder
-            view.textColor = UIColor.black.withAlphaComponent(0.35)
-        } else {
-            view.text = self.text
-            view.textColor = .black
-        }
-
+        view.text = self.text
         view.backgroundColor = .clear
         view.delegate = context.coordinator
         view.isEditable = true
         view.isUserInteractionEnabled = true
         view.isScrollEnabled = true
         
-        
         return view
     }
     
-    
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        if self.isFirstResponder {
+    func updateUIView(_ uiView: UITextView, context: Context) {        
+        if uiView.markedTextRange == nil {
+            // 日本語確定前の状態ではセットしない
+            uiView.text = self.text
+        }
+        
+        if self.becomeFirstResponder {
             uiView.becomeFirstResponder()
         }
     }
-
+    
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: RepresentableUITextView
         
@@ -99,11 +105,8 @@ struct RepresentableUITextView: UIViewRepresentable {
         }
         
         func textViewDidBeginEditing(_ textView: UITextView) {
-            // Viewを選択して入力開始する時にplaceholderを消している（色も変えてる）
-            textView.text = ""
-            textView.textColor = .black
-            
             self.parent.onBeginEditing()
+            self.parent.isFirstResponder = true
         }
         
         func textViewDidChange(_ textView: UITextView) {
@@ -112,11 +115,7 @@ struct RepresentableUITextView: UIViewRepresentable {
         }
         
         func textViewDidEndEditing(_ textView: UITextView) {
-            if parent.text.isEmpty {
-                textView.text = self.parent.placeholder
-                textView.textColor = UIColor.black.withAlphaComponent(0.35)
-                textView.backgroundColor = .clear
-            }
+            self.parent.isFirstResponder = false
         }
     }
 }
